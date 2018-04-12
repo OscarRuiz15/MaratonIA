@@ -1,9 +1,9 @@
 ﻿# MaratonIA<br /><br />
 
 Mario German Baquero Cedeño<br />
-Andres Felipe Gonzalez Rojas<br />
-Andres Felipe Medina Tascon<br />
+Andrés Felipe Gonzalez Rojas<br />
+Andrés Felipe Medina Tascón<br />
 Oscar Alexander Ruiz Palacio<br />
 <br />
-Universidad del Valle - Sede Buga<br />
+Universidad del Valle - Sede Tuluá<br />
 
