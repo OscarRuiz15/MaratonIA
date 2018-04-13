@@ -7,6 +7,7 @@ import clases.Robot;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 public class AdministrarMaraton extends UIAplicacion {
@@ -15,6 +16,8 @@ public class AdministrarMaraton extends UIAplicacion {
     private Robot papel;
     private Robot tijera;
     private Robot pistola;
+
+    private Arbol arbol;
 
     Thread hiloPrincipal;
     private List<Arbol> expandidos = new ArrayList<>();
@@ -40,6 +43,8 @@ public class AdministrarMaraton extends UIAplicacion {
         pelear = new Pelear(8, 2, 0, 0, 0);
         pistola = new Robot(4, 0, mover, pelear);
 
+        arbol = new Arbol(tablero, null, 0, 0, 0, false);
+
         hiloPrincipal = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -54,7 +59,6 @@ public class AdministrarMaraton extends UIAplicacion {
                             JOptionPane.showMessageDialog(null, "Finalizo", "finish", JOptionPane.WARNING_MESSAGE);
                             break;
                         } else {
-
                             ///////////////////////////////////////////////////
                             //Condicionales para decidir entre 4             //
                             ///////////////////////////////////////////////////
@@ -78,6 +82,7 @@ public class AdministrarMaraton extends UIAplicacion {
                             ///////////////////////////////////////////////////
                             //Condicionales para decidir entre 3             //
                             ///////////////////////////////////////////////////
+                            //Si se encuentra la piedra, papel y tijera en la misma posicion
                             else if (piedra.getPosicion() == papel.getPosicion() && piedra.getPosicion() == tijera.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
@@ -92,7 +97,8 @@ public class AdministrarMaraton extends UIAplicacion {
                                 elegirRobot(robots, enemigos);
                                 decision = true;
 
-                            } else if (piedra.getPosicion() == papel.getPosicion() && piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                            } //Si se encuentra la piedra, papel y pistola en la misma posicion
+                            else if (piedra.getPosicion() == papel.getPosicion() && piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
                                     enemigos[i] = tablero[i][piedra.getPosicion() + 1];
@@ -106,7 +112,8 @@ public class AdministrarMaraton extends UIAplicacion {
                                 elegirRobot(robots, enemigos);
                                 decision = true;
 
-                            } else if (piedra.getPosicion() == tijera.getPosicion() && piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                            } //Si se encuentra la piedra, tijera y pistola en la misma posicion
+                            else if (piedra.getPosicion() == tijera.getPosicion() && piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
                                     enemigos[i] = tablero[i][piedra.getPosicion() + 1];
@@ -120,7 +127,8 @@ public class AdministrarMaraton extends UIAplicacion {
                                 elegirRobot(robots, enemigos);
                                 decision = true;
 
-                            } else if (papel.getPosicion() == tijera.getPosicion() && papel.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                            } //Si se encuentra el papel, tijera y pistola en la misma posicion
+                            else if (papel.getPosicion() == tijera.getPosicion() && papel.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
                                     enemigos[i] = tablero[i][pistola.getPosicion() + 1];
@@ -144,11 +152,11 @@ public class AdministrarMaraton extends UIAplicacion {
                             ///////////////////////////////////////////////////
                             ///////////////////////////////////////////////////
                             if (!decision) {
-
+                                //Si se encuentra la piedra y el papel en la misma posicion
                                 if (piedra.getPosicion() == papel.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
-                                        enemigos[i] = tablero[i][pistola.getPosicion() + 1];
+                                        enemigos[i] = tablero[i][piedra.getPosicion() + 1];
 
                                     }
                                     Robot robots[] = {piedra, papel};
@@ -159,10 +167,11 @@ public class AdministrarMaraton extends UIAplicacion {
                                     elegirRobot(robots, enemigos);
                                     decision = true;
                                 }
+                                //Si se encuentra la piedra y la tijera en la misma posicion
                                 if (piedra.getPosicion() == tijera.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
-                                        enemigos[i] = tablero[i][pistola.getPosicion() + 1];
+                                        enemigos[i] = tablero[i][piedra.getPosicion() + 1];
 
                                     }
                                     Robot robots[] = {piedra, tijera};
@@ -173,6 +182,7 @@ public class AdministrarMaraton extends UIAplicacion {
                                     elegirRobot(robots, enemigos);
                                     decision = true;
                                 }
+                                //Si se encuentra la piedra y pistola en la misma posicion
                                 if (piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
@@ -187,10 +197,11 @@ public class AdministrarMaraton extends UIAplicacion {
                                     elegirRobot(robots, enemigos);
                                     decision = true;
                                 }
+                                //Si se encuentra el papel y la tijera en la misma posicion
                                 if (papel.getPosicion() == tijera.getPosicion() && tablero[0][papel.getPosicion() + 1] != 0) {
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
-                                        enemigos[i] = tablero[i][pistola.getPosicion() + 1];
+                                        enemigos[i] = tablero[i][papel.getPosicion() + 1];
 
                                     }
                                     Robot robots[] = {tijera, papel};
@@ -201,6 +212,7 @@ public class AdministrarMaraton extends UIAplicacion {
                                     elegirRobot(robots, enemigos);
                                     decision = true;
                                 }
+                                //Si se encuentra el papel y la pistola en la misma posicion
                                 if (papel.getPosicion() == pistola.getPosicion() && tablero[0][papel.getPosicion() + 1] != 0) {
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
@@ -215,6 +227,7 @@ public class AdministrarMaraton extends UIAplicacion {
                                     elegirRobot(robots, enemigos);
                                     decision = true;
                                 }
+                                //Si se encuentra la tijera y la pistola en la misma posicion
                                 if (tijera.getPosicion() == pistola.getPosicion() && tablero[0][pistola.getPosicion() + 1] != 0) {
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
@@ -236,9 +249,11 @@ public class AdministrarMaraton extends UIAplicacion {
                             ///////////////////////////////////////////////////
 
                             ///////////////////////////////////////////////////
+                            //Decidir entre 1                                //
+                            ///////////////////////////////////////////////////
+                            ///////////////////////////////////////////////////
                             //Oscar Estuvo aca                               //
                             ///////////////////////////////////////////////////
-                            // No se que hace ese condicional, pero sirvio
                             if (!decision) {
                                 //Condicional si todos esten en una posicion diferente (alguno solo en una columna)
                                 if (piedra.getPosicion() != papel.getPosicion() && piedra.getPosicion() != tijera.getPosicion()
@@ -254,7 +269,6 @@ public class AdministrarMaraton extends UIAplicacion {
                                         Robot robots[] = {piedra};
                                         for (int i = 0; i < robots.length; i++) {
                                             robots[i].getPelear().tiempoPelea(enemigos);
-
                                         }
                                         elegirRobot(robots, enemigos);
                                         decision = true;
@@ -265,7 +279,6 @@ public class AdministrarMaraton extends UIAplicacion {
                                         int enemigos[] = new int[4];
                                         for (int i = 0; i < enemigos.length; i++) {
                                             enemigos[i] = tablero[i][papel.getPosicion() + 1];
-
                                         }
                                         Robot robots[] = {papel};
                                         for (int i = 0; i < robots.length; i++) {
@@ -285,7 +298,6 @@ public class AdministrarMaraton extends UIAplicacion {
                                         Robot robots[] = {tijera};
                                         for (int i = 0; i < robots.length; i++) {
                                             robots[i].getPelear().tiempoPelea(enemigos);
-
                                         }
                                         elegirRobot(robots, enemigos);
                                         decision = true;
@@ -296,9 +308,10 @@ public class AdministrarMaraton extends UIAplicacion {
                                         int enemigos[] = new int[4];
                                         for (int i = 0; i < enemigos.length; i++) {
                                             enemigos[i] = tablero[i][pistola.getPosicion() + 1];
-
                                         }
                                         Robot robots[] = {pistola};
+                                        //Calcula el tiempo en que acaba con los enemigos
+                                        //Algo raro aca, pilas
                                         for (int i = 0; i < robots.length; i++) {
                                             robots[i].getPelear().tiempoPelea(enemigos);
 
@@ -314,7 +327,7 @@ public class AdministrarMaraton extends UIAplicacion {
                             //Hasta aca estuvo Oscar                         //
                             ///////////////////////////////////////////////////
                             ///////////////////////////////////////////////////
-                            //FIN para decidir entre 2                       //
+                            //FIN para decidir entre 1                       //
                             ///////////////////////////////////////////////////
 
                             ///////////////////////////////////////////////////
@@ -345,7 +358,7 @@ public class AdministrarMaraton extends UIAplicacion {
                             //FIN Condicionales para pelear                  //
 
                             decision = false;
-
+                            crearNodo(arbol);
                             mostrarTablero();
 
                             Thread.sleep(500);
@@ -414,17 +427,18 @@ public class AdministrarMaraton extends UIAplicacion {
 
     }
 ////////////////////////////////////////////////////////////////////////////////////////////
+
     public void elegirRobot(Robot robot[], int enemigos[]) {
+        //Elige el robot que se demore menos tiempo en derrotarlos
         Robot elegido = robot[0];
         int pos = 0;
         for (int i = 0; i < robot.length; i++) {
             if (elegido.getPelear().getTiempo() > robot[i].getPelear().getTiempo()) {
                 elegido = robot[i];
                 pos = i;
-
             }
-
         }
+
         //Pasar como elegido cada robot que tenga que pelear del tablero del nodo
         elegido.getPelear().setEnemigos(enemigos);
 
@@ -433,111 +447,109 @@ public class AdministrarMaraton extends UIAplicacion {
                 robot[i].getPelear().setTiempo(0);
                 robot[i].getMover().setCasillas(2);
             }
-
         }
 
     }
-    
-    public void generarDesicion(){
+
+    public void generarDesicion() {
         if (piedra.getPosicion() != papel.getPosicion() && piedra.getPosicion() != tijera.getPosicion()
-                                        && piedra.getPosicion() != pistola.getPosicion()) {
-                                    //Si en la posicion siguiente a donde esta parada la piedra es un enemigo (mayor a 4)
-                                    //entonces el elegido es la piedra
-                                    if (tablero[0][piedra.getPosicion() + 1] > 4 && piedra.getPelear().getTiempo() == 0) {
-                                        int enemigos[] = new int[4];
-                                        for (int i = 0; i < enemigos.length; i++) {
-                                            enemigos[i] = tablero[i][piedra.getPosicion() + 1];
+                && piedra.getPosicion() != pistola.getPosicion()) {
+            //Si en la posicion siguiente a donde esta parada la piedra es un enemigo (mayor a 4)
+            //entonces el elegido es la piedra
+            if (tablero[0][piedra.getPosicion() + 1] > 4 && piedra.getPelear().getTiempo() == 0) {
+                int enemigos[] = new int[4];
+                for (int i = 0; i < enemigos.length; i++) {
+                    enemigos[i] = tablero[i][piedra.getPosicion() + 1];
 
-                                        }
-                                        Robot robots[] = {piedra};
-                                        for (int i = 0; i < robots.length; i++) {
-                                            robots[i].getPelear().tiempoPelea(enemigos);
+                }
+                Robot robots[] = {piedra};
+                for (int i = 0; i < robots.length; i++) {
+                    robots[i].getPelear().tiempoPelea(enemigos);
 
-                                        }
-                                        elegirRobot(robots, enemigos);
-                                        decision = true;
-                                    }
-                                    //Si en la posicion siguiente a donde esta parada el papel es un enemigo (mayor a 4)
-                                    //entonces el elegido es el papel
-                                    if (tablero[0][papel.getPosicion() + 1] > 4 && papel.getPelear().getTiempo() == 0) {
-                                        int enemigos[] = new int[4];
-                                        for (int i = 0; i < enemigos.length; i++) {
-                                            enemigos[i] = tablero[i][papel.getPosicion() + 1];
+                }
+                elegirRobot(robots, enemigos);
+                decision = true;
+            }
+            //Si en la posicion siguiente a donde esta parada el papel es un enemigo (mayor a 4)
+            //entonces el elegido es el papel
+            if (tablero[0][papel.getPosicion() + 1] > 4 && papel.getPelear().getTiempo() == 0) {
+                int enemigos[] = new int[4];
+                for (int i = 0; i < enemigos.length; i++) {
+                    enemigos[i] = tablero[i][papel.getPosicion() + 1];
 
-                                        }
-                                        Robot robots[] = {papel};
-                                        for (int i = 0; i < robots.length; i++) {
-                                            robots[i].getPelear().tiempoPelea(enemigos);
+                }
+                Robot robots[] = {papel};
+                for (int i = 0; i < robots.length; i++) {
+                    robots[i].getPelear().tiempoPelea(enemigos);
 
-                                        }
-                                        elegirRobot(robots, enemigos);
-                                        decision = true;
-                                    }
-                                    //Si en la posicion siguiente a donde esta parada la tijera es un enemigo (mayor a 4)
-                                    //entonces el elegido es la tijera
-                                    if (tablero[0][tijera.getPosicion() + 1] > 4 && tijera.getPelear().getTiempo() == 0) {
-                                        int enemigos[] = new int[4];
-                                        for (int i = 0; i < enemigos.length; i++) {
-                                            enemigos[i] = tablero[i][tijera.getPosicion() + 1];
-                                        }
-                                        Robot robots[] = {tijera};
-                                        for (int i = 0; i < robots.length; i++) {
-                                            robots[i].getPelear().tiempoPelea(enemigos);
+                }
+                elegirRobot(robots, enemigos);
+                decision = true;
+            }
+            //Si en la posicion siguiente a donde esta parada la tijera es un enemigo (mayor a 4)
+            //entonces el elegido es la tijera
+            if (tablero[0][tijera.getPosicion() + 1] > 4 && tijera.getPelear().getTiempo() == 0) {
+                int enemigos[] = new int[4];
+                for (int i = 0; i < enemigos.length; i++) {
+                    enemigos[i] = tablero[i][tijera.getPosicion() + 1];
+                }
+                Robot robots[] = {tijera};
+                for (int i = 0; i < robots.length; i++) {
+                    robots[i].getPelear().tiempoPelea(enemigos);
 
-                                        }
-                                        elegirRobot(robots, enemigos);
-                                        decision = true;
-                                    }
-                                    //Si en la posicion siguiente a donde esta parada la pistola es un enemigo (mayor a 4)
-                                    //entonces el elegido es la pistola
-                                    if (tablero[0][pistola.getPosicion() + 1] > 4 && pistola.getPelear().getTiempo() == 0) {
-                                        int enemigos[] = new int[4];
-                                        for (int i = 0; i < enemigos.length; i++) {
-                                            enemigos[i] = tablero[i][pistola.getPosicion() + 1];
+                }
+                elegirRobot(robots, enemigos);
+                decision = true;
+            }
+            //Si en la posicion siguiente a donde esta parada la pistola es un enemigo (mayor a 4)
+            //entonces el elegido es la pistola
+            if (tablero[0][pistola.getPosicion() + 1] > 4 && pistola.getPelear().getTiempo() == 0) {
+                int enemigos[] = new int[4];
+                for (int i = 0; i < enemigos.length; i++) {
+                    enemigos[i] = tablero[i][pistola.getPosicion() + 1];
 
-                                        }
-                                        Robot robots[] = {pistola};
-                                        for (int i = 0; i < robots.length; i++) {
-                                            robots[i].getPelear().tiempoPelea(enemigos);
+                }
+                Robot robots[] = {pistola};
+                for (int i = 0; i < robots.length; i++) {
+                    robots[i].getPelear().tiempoPelea(enemigos);
 
-                                        }
-                                        elegirRobot(robots, enemigos);
-                                        decision = true;
-                                    }
-                                    //Estos condicionales son diferentes a los demas (!=0) porque se daba el caso en el que
-                                    //el siguiente no era un enemigo, si no otro robot, y lo tomaba como enemigo y se jodia
-                                }
-                            
-                            ///////////////////////////////////////////////////
-                            //Hasta aca estuvo Oscar                         //
-                            ///////////////////////////////////////////////////
-                            ///////////////////////////////////////////////////
-                            //FIN para decidir entre 2                       //
-                            ///////////////////////////////////////////////////
+                }
+                elegirRobot(robots, enemigos);
+                decision = true;
+            }
+            //Estos condicionales son diferentes a los demas (!=0) porque se daba el caso en el que
+            //el siguiente no era un enemigo, si no otro robot, y lo tomaba como enemigo y se jodia
+        }
 
-                            ///////////////////////////////////////////////////
-                            //Condicionales para pelear                      //
-                            ///////////////////////////////////////////////////
-                            if (piedra.getPelear().getTiempo() != 0) {
-                                peleaRobot(piedra);
-                            } else {
-                                moverRobot(piedra);
-                            }
-                            if (papel.getPelear().getTiempo() != 0) {
-                                peleaRobot(papel);
-                            } else {
-                                moverRobot(papel);
-                            }
-                            if (tijera.getPelear().getTiempo() != 0) {
-                                peleaRobot(tijera);
-                            } else {
-                                moverRobot(tijera);
-                            }
-                            if (pistola.getPelear().getTiempo() != 0) {
-                                peleaRobot(pistola);
-                            } else {
-                                moverRobot(pistola);
-                            }
+        ///////////////////////////////////////////////////
+        //Hasta aca estuvo Oscar                         //
+        ///////////////////////////////////////////////////
+        ///////////////////////////////////////////////////
+        //FIN para decidir entre 1                       //
+        ///////////////////////////////////////////////////
+        ///////////////////////////////////////////////////
+        //Condicionales para pelear                      //
+        ///////////////////////////////////////////////////
+        if (piedra.getPelear().getTiempo() != 0) {
+            peleaRobot(piedra);
+        } else {
+            moverRobot(piedra);
+        }
+        if (papel.getPelear().getTiempo() != 0) {
+            peleaRobot(papel);
+        } else {
+            moverRobot(papel);
+        }
+        if (tijera.getPelear().getTiempo() != 0) {
+            peleaRobot(tijera);
+        } else {
+            moverRobot(tijera);
+        }
+        if (pistola.getPelear().getTiempo() != 0) {
+            peleaRobot(pistola);
+        } else {
+            moverRobot(pistola);
+        }
     }
 
     public void mostrarTablero() {
@@ -594,57 +606,70 @@ public class AdministrarMaraton extends UIAplicacion {
         return acumulador;
     }
 //Esto no sirve pero se deja para inicializar el nodo         
-    public int calcularCosto(Arbol nodo){
-        int tab[][]=nodo.getNodo();
-        int acumulador=0;
+
+    public int calcularCosto(Arbol nodo) {
+        int tab[][] = nodo.getNodo();
+        int acumulador = 0;
         for (int i = 0; i < tab.length; i++) {
             for (int j = 0; j < tab[0].length; j++) {
-                if (tab[i][j]==1 || tab[i][j]==2 || tab[i][j]==3 || tab[i][j]==4 ) {
-                    acumulador+=tab.length-i;
-                    
+                if (tab[i][j] == 1 || tab[i][j] == 2 || tab[i][j] == 3 || tab[i][j] == 4) {
+                    acumulador += tab.length - i;
+
                 }
-                
+
             }
-            
+
         }
-        acumulador/=4;
-        
-        
+        acumulador /= 4;
+
         return acumulador;
     }
-   ////////////////////////////////////////////////////////////         
+
+    ////////////////////////////////////////////////////////////         
     public Arbol crearNodo(Arbol padre) {
-        int tab[][]=padre.getNodo();
-        
-        Arbol nodo=new Arbol(tab, padre,  0, 0, 0, false);
-        Robot robots[]={piedra,papel,tijera,pistola};
+        int tab[][] = padre.getNodo();
+
+        Arbol nodo = new Arbol(tab, padre, 0, 0, 0, false);
+        Robot robots[] = {piedra, papel, tijera, pistola};
         nodo.setRobots(robots);
-        int heuristica=calcularHeuristica(nodo);
+        int heuristica = calcularHeuristica(nodo);
         nodo.setHeuristica(heuristica);
-        int costo=calcularCosto(nodo);
+        int costo = calcularCosto(nodo);
         nodo.setCosto(costo);
-        nodo.setSuma(costo+heuristica);
+        nodo.setSuma(costo + heuristica);
+
+        verNodos(nodo);
+
         return nodo;
     }
-    
-    public Arbol InicializarNodo(Arbol nodo) {
-        nodo.setExpandido(true);
-        int tab[][]=padre.getNodo();
-        
-        Arbol nodo=new Arbol(tab, padre,  0, 0, 0, false);
-        Robot robots[]={piedra,papel,tijera,pistola};
+
+    public Arbol InicializarNodo(Arbol padre) {
+        //nodo.setExpandido(true);
+        int tab[][] = padre.getNodo();
+
+        Arbol nodo = new Arbol(tab, padre, 0, 0, 0, false);
+        Robot robots[] = {piedra, papel, tijera, pistola};
         nodo.setRobots(robots);
-        int heuristica=calcularHeuristica(nodo);
+        int heuristica = calcularHeuristica(nodo);
         nodo.setHeuristica(heuristica);
-        int costo=calcularCosto(nodo);
+        int costo = calcularCosto(nodo);
         nodo.setCosto(costo);
-        nodo.setSuma(costo+heuristica);
+        nodo.setSuma(costo + heuristica);
         return nodo;
+    }
+
+    public void verNodos(Arbol nodo) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < nodo.getNodo()[0].length; j++) {
+                System.out.print(nodo.getNodo()[i][j] + " ");
+            }
+            System.out.println("");
+        }
+        System.out.println("\n\n");
     }
 
     public void animacion() {
         hiloPrincipal.start();
-
     }
 
 }

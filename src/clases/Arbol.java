@@ -1,6 +1,7 @@
 package clases;
 
 public class Arbol {
+
     private int nodo[][];
     private Arbol padre;
     private Arbol hijos[];
@@ -13,12 +14,12 @@ public class Arbol {
     public Arbol(int[][] nodo, Arbol padre, int heuristica, int costo, int suma, boolean expandido) {
         this.nodo = nodo;
         this.padre = padre;
-       
+
         this.heuristica = heuristica;
         this.costo = costo;
         this.suma = suma;
-        this.expandido=expandido;
-        
+        this.expandido = expandido;
+
     }
 
     public int[][] getNodo() {
@@ -36,8 +37,6 @@ public class Arbol {
     public void setPadre(Arbol padre) {
         this.padre = padre;
     }
-
-    
 
     public Arbol[] getHijos() {
         return hijos;
@@ -86,8 +85,5 @@ public class Arbol {
     public void setExpandido(boolean expandido) {
         this.expandido = expandido;
     }
-    
-    
-    
-    
+
 }
