@@ -44,6 +44,10 @@ public class AdministrarMaraton extends UIAplicacion {
         pistola = new Robot(4, 0, mover, pelear);
 
         arbol = new Arbol(tablero, null, 0, 0, 0, false);
+        AdministrarArbol ada=new AdministrarArbol();
+        Robot robots[]={piedra,papel,tijera,pistola};
+        arbol.setRobots(robots);
+        
 
         hiloPrincipal = new Thread(new Runnable() {
             @Override
@@ -69,13 +73,46 @@ public class AdministrarMaraton extends UIAplicacion {
                                     enemigos[i] = tablero[i][piedra.getPosicion() + 1];
 
                                 }
-                                Robot robots[] = {piedra, papel, tijera, pistola};
-                                for (int i = 0; i < robots.length; i++) {
-                                    robots[i].getPelear().tiempoPelea(enemigos);
-
-                                }
-                                elegirRobot(robots, enemigos);
-                                decision = true;
+                                int robotspelea[] = {1, 2, 3};
+                                Arbol arb=arbol;
+//                                Robot robots[] = {piedra, papel, tijera, pistola};
+                                Arbol nodo1 = ada.crearNodo(arbol, enemigos, robotspelea, null, piedra.getId() - 1);
+                                robotspelea[0]=0; 
+                                
+                                Arbol nodo2 = ada.crearNodo(arbol, enemigos, robotspelea, null, papel.getId() - 1);
+                                robotspelea[1]=1; 
+                                Arbol nodo3 = ada.crearNodo(arbol, enemigos, robotspelea, null, tijera.getId() - 1);
+                                robotspelea[2]=2; 
+                                Arbol nodo4 = ada.crearNodo(arbol, enemigos, robotspelea, null, pistola.getId() - 1);
+                                creados.add(nodo1);
+                                creados.add(nodo2);
+                                creados.add(nodo3);
+                                creados.add(nodo4);
+                                Arbol hijos[] = {nodo1, nodo2, nodo3, nodo4};
+                                arbol.setHijos(hijos);
+//                                nodo1.getRobots()[0].getPelear().tiempoPelea(enemigos);
+//                                nodo1.getRobots()[0].getPelear().setEnemigos(enemigos);
+//
+//                                for (int i = 0; i < 4; i++) {
+//                                    if (i != 0) {
+//                                        nodo1.getRobots()[i].getPelear().setTiempo(0);
+//                                        nodo1.getRobots()[i].getMover().setCasillas(2);
+//                                    }
+//                                }
+//                                peleaRobot(nodo1.getRobots()[0]);
+//                                for (int i = 0; i < 4; i++) {
+//                                    if (i != 0) {
+//                                        moverRobot(nodo1.getRobots()[i]);
+//                                    }
+//
+//                                }
+//
+//                                for (int i = 0; i < robots.length; i++) {
+//                                    robots[i].getPelear().tiempoPelea(enemigos);
+//
+//                                }
+//                                elegirRobot(robots, enemigos);
+//                                decision = true;
                             } ///////////////////////////////////////////////////
                             //Fin para decidir entre 4                       //
                             ///////////////////////////////////////////////////
@@ -358,7 +395,7 @@ public class AdministrarMaraton extends UIAplicacion {
                             //FIN Condicionales para pelear                  //
 
                             decision = false;
-                            crearNodo(arbol);
+
                             mostrarTablero();
 
                             Thread.sleep(500);
@@ -552,6 +589,53 @@ public class AdministrarMaraton extends UIAplicacion {
         }
     }
 
+    public void moverRobot(Robot robot, int tablero[][]) {
+
+        int mov = robot.getMover().moverA(robot.getPosicion());
+
+        tablero[robot.getId() - 1][mov] = robot.getId();
+        tablero[robot.getId() - 1][robot.getPosicion()] = 0;
+        robot.setPosicion(mov);
+        robot.getMover().setCasillas(1);
+
+    }
+
+    public void peleaRobot(Robot robot, int tablero[][]) {
+        int largo = robot.getPelear().getEnemigos().length;
+        int posicion = robot.getPelear().getPosenemigo();
+        int array[] = robot.getPelear().getEnemigos();
+
+        int fuerza = robot.getPelear().getFuerza();
+
+        if (array[posicion] != 0) {
+            if (array[posicion] == fuerza) {
+                array[posicion] = 0;
+                robot.getPelear().setEnemigos(array);
+                robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
+                tablero[posicion][robot.getPosicion() + 1] = 0;
+                robot.getPelear().setPosenemigo(posicion + 1);
+                /////////////////////Cambio/////////////////////////////////////////////////////////    
+                //Cambie esta logica porque solo funciona siempre y cuando todos los enemigos sean iguales
+                //Ahora puse un contador de atributo para contar cuanto le falta al robot para acabar con cada enemigo
+            } else {
+                if (robot.getPelear().getTiempoenemigo() == 0) {
+                    robot.getPelear().setTiempoenemigo(2);
+                }
+
+                robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
+                robot.getPelear().setTiempoenemigo(robot.getPelear().getTiempoenemigo() - 1);
+                if (robot.getPelear().getTiempoenemigo() == 0) {
+                    array[posicion] = 0;
+                    robot.getPelear().setEnemigos(array);
+                    tablero[posicion][robot.getPosicion() + 1] = 0;
+                    robot.getPelear().setPosenemigo(posicion + 1);
+                }
+
+            }
+            /////////////////////Fin Cambio/////////////////////////////////////////////////////////    
+        }
+    }
+
     public void mostrarTablero() {
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[0].length; j++) {
@@ -592,71 +676,7 @@ public class AdministrarMaraton extends UIAplicacion {
     }
 
     //Metodo para calcular la heurisca de cada nodo
-    public int calcularHeuristica(Arbol nodo) {
-        int tab[][] = nodo.getNodo();
-        int acumulador = 0;
-        Robot robots[] = nodo.getRobots();
-        for (int i = 0; i < robots.length; i++) {
-            //Calcula la posicion del robot con respecto a la meta
-            acumulador += robots[i].getPosicion() - tab.length;
-
-        }
-        acumulador /= 4;
-
-        return acumulador;
-    }
-//Esto no sirve pero se deja para inicializar el nodo         
-
-    public int calcularCosto(Arbol nodo) {
-        int tab[][] = nodo.getNodo();
-        int acumulador = 0;
-        for (int i = 0; i < tab.length; i++) {
-            for (int j = 0; j < tab[0].length; j++) {
-                if (tab[i][j] == 1 || tab[i][j] == 2 || tab[i][j] == 3 || tab[i][j] == 4) {
-                    acumulador += tab.length - i;
-
-                }
-
-            }
-
-        }
-        acumulador /= 4;
-
-        return acumulador;
-    }
-
-    ////////////////////////////////////////////////////////////         
-    public Arbol crearNodo(Arbol padre) {
-        int tab[][] = padre.getNodo();
-
-        Arbol nodo = new Arbol(tab, padre, 0, 0, 0, false);
-        Robot robots[] = {piedra, papel, tijera, pistola};
-        nodo.setRobots(robots);
-        int heuristica = calcularHeuristica(nodo);
-        nodo.setHeuristica(heuristica);
-        int costo = calcularCosto(nodo);
-        nodo.setCosto(costo);
-        nodo.setSuma(costo + heuristica);
-
-        verNodos(nodo);
-
-        return nodo;
-    }
-
-    public Arbol InicializarNodo(Arbol padre) {
-        //nodo.setExpandido(true);
-        int tab[][] = padre.getNodo();
-
-        Arbol nodo = new Arbol(tab, padre, 0, 0, 0, false);
-        Robot robots[] = {piedra, papel, tijera, pistola};
-        nodo.setRobots(robots);
-        int heuristica = calcularHeuristica(nodo);
-        nodo.setHeuristica(heuristica);
-        int costo = calcularCosto(nodo);
-        nodo.setCosto(costo);
-        nodo.setSuma(costo + heuristica);
-        return nodo;
-    }
+   
 
     public void verNodos(Arbol nodo) {
         for (int i = 0; i < 4; i++) {
