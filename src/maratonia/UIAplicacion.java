@@ -139,7 +139,7 @@ public class UIAplicacion extends javax.swing.JFrame {
                 }
                 validate();
             }
-            System.out.println(campos[0][0].getWidth() + " " + campos[0][0].getHeight());
+            //System.out.println(campos[0][0].getWidth() + " " + campos[0][0].getHeight());
             mostrarTablero(tablero);
         }
     }//GEN-LAST:event_menuCargarMouseClicked

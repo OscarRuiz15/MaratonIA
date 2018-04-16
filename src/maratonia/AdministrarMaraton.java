@@ -44,10 +44,9 @@ public class AdministrarMaraton extends UIAplicacion {
         pistola = new Robot(4, 0, mover, pelear);
 
         arbol = new Arbol(tablero, null, 0, 0, 0, false);
-        AdministrarArbol ada=new AdministrarArbol();
-        Robot robots[]={piedra,papel,tijera,pistola};
+        AdministrarArbol ada = new AdministrarArbol();
+        Robot robots[] = {piedra, papel, tijera, pistola};
         arbol.setRobots(robots);
-        
 
         hiloPrincipal = new Thread(new Runnable() {
             @Override
@@ -73,16 +72,33 @@ public class AdministrarMaraton extends UIAplicacion {
                                     enemigos[i] = tablero[i][piedra.getPosicion() + 1];
 
                                 }
-                                int robotspelea[] = {1, 2, 3};
-                                Arbol arb=arbol;
-//                                Robot robots[] = {piedra, papel, tijera, pistola};
-                                Arbol nodo1 = ada.crearNodo(arbol, enemigos, robotspelea, null, piedra.getId() - 1);
-                                robotspelea[0]=0; 
                                 
+                                int robotspelea[] = {1, 2, 3};
+                                //Arbol arb1 = arbol;
+//                                Robot robots[] = {piedra, papel, tijera, pistola};
+                                System.out.println("A1");
+                                for (int i = 0; i < 4; i++) {
+                                    for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                        System.out.print(arbol.getNodo()[i][j]+" ");                                        
+                                    }
+                                    System.out.println("");
+                                }
+                                Arbol nodo1 = ada.crearNodo(arbol, enemigos, robotspelea, null, piedra.getId() - 1);
+                                
+                                robotspelea[0] = 0;
+                                System.out.println("A2");
+                                for (int i = 0; i < 4; i++) {
+                                    for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                        System.out.print(arbol.getNodo()[i][j]+" ");                                        
+                                    }
+                                    System.out.println("");
+                                }
                                 Arbol nodo2 = ada.crearNodo(arbol, enemigos, robotspelea, null, papel.getId() - 1);
-                                robotspelea[1]=1; 
+                                
+                                robotspelea[1] = 1;
                                 Arbol nodo3 = ada.crearNodo(arbol, enemigos, robotspelea, null, tijera.getId() - 1);
-                                robotspelea[2]=2; 
+                                
+                                robotspelea[2] = 2;
                                 Arbol nodo4 = ada.crearNodo(arbol, enemigos, robotspelea, null, pistola.getId() - 1);
                                 creados.add(nodo1);
                                 creados.add(nodo2);
@@ -675,18 +691,7 @@ public class AdministrarMaraton extends UIAplicacion {
         }
     }
 
-    //Metodo para calcular la heurisca de cada nodo
-   
-
-    public void verNodos(Arbol nodo) {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < nodo.getNodo()[0].length; j++) {
-                System.out.print(nodo.getNodo()[i][j] + " ");
-            }
-            System.out.println("");
-        }
-        System.out.println("\n\n");
-    }
+    
 
     public void animacion() {
         hiloPrincipal.start();

@@ -4,13 +4,12 @@ import clases.Arbol;
 import clases.Robot;
 
 public class AdministrarArbol {
+    static int xd=1;
     
-    
-
     public AdministrarArbol() {
     }
-    
-     public int calcularHeuristica(Arbol nodo) {
+
+    public int calcularHeuristica(Arbol nodo) {
         int tab[][] = nodo.getNodo();
         int acumulador = 0;
         Robot robots[] = nodo.getRobots();
@@ -82,8 +81,7 @@ public class AdministrarArbol {
         nodo.setCosto(costo);
         nodo.setSuma(costo + heuristica);
 
-//        verNodos(nodo);
-
+        verNodos(nodo);
         return nodo;
     }
 
@@ -92,8 +90,8 @@ public class AdministrarArbol {
         int tab[][] = padre.getNodo();
 
         Arbol nodo = new Arbol(tab, padre, 0, 0, 0, false);
-//        Robot robots[] = {piedra, papel, tijera, pistola};
-//        nodo.setRobots(robots);
+        Robot robots[] = {padre.getRobots()[0], padre.getRobots()[1], padre.getRobots()[2], padre.getRobots()[3]};
+        nodo.setRobots(robots);
         int heuristica = calcularHeuristica(nodo);
         nodo.setHeuristica(heuristica);
         int costo = calcularCosto(nodo);
@@ -101,6 +99,7 @@ public class AdministrarArbol {
         nodo.setSuma(costo + heuristica);
         return nodo;
     }
+
     public void moverRobot(Robot robot, int tablero[][]) {
 
         int mov = robot.getMover().moverA(robot.getPosicion());
@@ -146,5 +145,18 @@ public class AdministrarArbol {
             }
             /////////////////////Fin Cambio/////////////////////////////////////////////////////////    
         }
+    }
+    
+    //Metodo para calcular la heurisca de cada nodo
+    public void verNodos(Arbol nodo) {
+        System.out.println(xd+":" );
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < nodo.getNodo()[0].length; j++) {
+                System.out.print(nodo.getNodo()[i][j] + " ");
+            }
+            System.out.println("");
+        }
+        System.out.println("\n");
+        xd++;
     }
 }
