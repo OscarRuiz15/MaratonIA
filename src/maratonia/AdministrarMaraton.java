@@ -6,6 +6,8 @@ import clases.Pelear;
 import clases.Robot;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -43,7 +45,7 @@ public class AdministrarMaraton extends UIAplicacion {
         pelear = new Pelear(8, 2, 0, 0, 0);
         pistola = new Robot(4, 0, mover, pelear);
 
-        arbol = new Arbol(tablero, null, 0, 0, 0, false);
+        arbol = new Arbol(tablero.clone(), 0, 0, 0, 0, false);
         AdministrarArbol ada = new AdministrarArbol();
         Robot robots[] = {piedra, papel, tijera, pistola};
         arbol.setRobots(robots);
@@ -83,9 +85,12 @@ public class AdministrarMaraton extends UIAplicacion {
                                     }
                                     System.out.println("");
                                 }
-                                Arbol nodo1 = ada.crearNodo(arbol, enemigos, robotspelea, null, piedra.getId() - 1);
+//                                int tableroactual[][]=tablero.clone();
                                 
-                                robotspelea[0] = 0;
+//                                Robot robots[]={piedra,papel,tijera,pistola};
+////                                Arbol nodo1 = ada.crearNodo((Arbol)arbol.clone(), enemigos, robotspelea, null, piedra.getId() - 1);
+                                
+                                
                                 System.out.println("A2");
                                 for (int i = 0; i < 4; i++) {
                                     for (int j = 0; j < arbol.getNodo()[0].length; j++) {
@@ -93,13 +98,31 @@ public class AdministrarMaraton extends UIAplicacion {
                                     }
                                     System.out.println("");
                                 }
-                                Arbol nodo2 = ada.crearNodo(arbol, enemigos, robotspelea, null, papel.getId() - 1);
+                                
+                                Arbol nodo1=null;
+                                Arbol nodo2=null;
+                                Arbol nodo3=null;
+                                Arbol nodo4=null;
+                                try {
+                                    
+                                    nodo1 = ada.crearNodo((Arbol)arbol.clone(), enemigos, robotspelea, null, piedra.getId() - 1);
+                                    robotspelea[0] = 0;
+                                    nodo2 = ada.crearNodo((Arbol)arbol.clone(), enemigos, robotspelea, null, piedra.getId() - 1);
+                                    robotspelea[1] = 1;
+                                    nodo3 = ada.crearNodo((Arbol)arbol.clone(), enemigos, robotspelea, null, piedra.getId() - 1);
+                                    robotspelea[2] = 2;
+                                    nodo4 = ada.crearNodo((Arbol)arbol.clone(), enemigos, robotspelea, null, piedra.getId() - 1);
+                                } catch (CloneNotSupportedException ex) {
+                                    Logger.getLogger(AdministrarMaraton.class.getName()).log(Level.SEVERE, null, ex);
+                                }
                                 
                                 robotspelea[1] = 1;
-                                Arbol nodo3 = ada.crearNodo(arbol, enemigos, robotspelea, null, tijera.getId() - 1);
+                                
+//                                Arbol nodo3 = ada.crearNodo((Arbol)arbol.clone(), enemigos, robotspelea, null, piedra.getId() - 1);
                                 
                                 robotspelea[2] = 2;
-                                Arbol nodo4 = ada.crearNodo(arbol, enemigos, robotspelea, null, pistola.getId() - 1);
+                                
+//                                Arbol nodo4 = ada.crearNodo((Arbol)arbol.clone(), enemigos, robotspelea, null, piedra.getId() - 1);
                                 creados.add(nodo1);
                                 creados.add(nodo2);
                                 creados.add(nodo3);

@@ -2,7 +2,7 @@ package clases;
 
 
 
-public class Robot {
+public class Robot implements Cloneable{
     
     private int id;
     private int posicion;
@@ -10,6 +10,11 @@ public class Robot {
     private Pelear pelear;
     
     
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
 
     public Robot(int id, int posicion, Mover mover, Pelear pelear) {
         this.id=id;

@@ -1,9 +1,9 @@
 package clases;
 
-public class Arbol {
+public class Arbol implements Cloneable {
 
     private int nodo[][];
-    private Arbol padre;
+    private int padre;
     private Arbol hijos[];
     private int heuristica;
     private int costo;
@@ -11,7 +11,14 @@ public class Arbol {
     private boolean expandido;
     private Robot robots[];
 
-    public Arbol(int[][] nodo, Arbol padre, int heuristica, int costo, int suma, boolean expandido) {
+    
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public Arbol(int[][] nodo, int padre, int heuristica, int costo, int suma, boolean expandido) {
         this.nodo = nodo;
         this.padre = padre;
 
@@ -30,13 +37,15 @@ public class Arbol {
         this.nodo = nodo;
     }
 
-    public Arbol getPadre() {
+    public int getPadre() {
         return padre;
     }
 
-    public void setPadre(Arbol padre) {
+    public void setPadre(int padre) {
         this.padre = padre;
     }
+
+   
 
     public Arbol[] getHijos() {
         return hijos;

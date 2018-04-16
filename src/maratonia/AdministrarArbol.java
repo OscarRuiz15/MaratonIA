@@ -2,6 +2,8 @@ package maratonia;
 
 import clases.Arbol;
 import clases.Robot;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AdministrarArbol {
     static int xd=1;
@@ -44,10 +46,29 @@ public class AdministrarArbol {
 
     ////////////////////////////////////////////////////////////         
     public Arbol crearNodo(Arbol padre, int enemigos[], int robotspelea[], int robotsres[], int id) {
-        int tab[][] = padre.getNodo();
+        Arbol p=null;
+        try {
+            p = (Arbol)padre.clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(AdministrarArbol.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int tab[][] = new int[4][14];
+        tab[0]=p.getNodo()[0].clone();
+        tab[1]=p.getNodo()[1].clone();
+        tab[2]=p.getNodo()[2].clone();
+        tab[3]=p.getNodo()[3].clone();
+        
 
-        Arbol nodo = new Arbol(tab, padre, 0, 0, 0, false);
-        Robot robots[] = {padre.getRobots()[0], padre.getRobots()[1], padre.getRobots()[2], padre.getRobots()[3]};
+        Arbol nodo = new Arbol(tab, 1, 0, 0, 0, false);
+        Robot robots[]=new Robot[4];
+        try {
+            robots[0] = (Robot) p.getRobots()[0].clone();
+            robots[1] = (Robot) p.getRobots()[1].clone();
+            robots[2] = (Robot) p.getRobots()[2].clone();
+            robots[3] = (Robot) p.getRobots()[3].clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(AdministrarArbol.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         robots[id].getPelear().tiempoPelea(enemigos);
         robots[id].getPelear().setEnemigos(enemigos);
@@ -85,12 +106,12 @@ public class AdministrarArbol {
         return nodo;
     }
 
-    public Arbol InicializarNodo(Arbol padre) {
+    public Arbol InicializarNodo(int padre,int tab[][],Robot robots[]) {
         //nodo.setExpandido(true);
-        int tab[][] = padre.getNodo();
+        
 
         Arbol nodo = new Arbol(tab, padre, 0, 0, 0, false);
-        Robot robots[] = {padre.getRobots()[0], padre.getRobots()[1], padre.getRobots()[2], padre.getRobots()[3]};
+        
         nodo.setRobots(robots);
         int heuristica = calcularHeuristica(nodo);
         nodo.setHeuristica(heuristica);
