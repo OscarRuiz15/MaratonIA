@@ -6,8 +6,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AdministrarArbol {
-    static int xd=1;
-    
+
+    static int xd = 1;
+
     public AdministrarArbol() {
     }
 
@@ -17,52 +18,47 @@ public class AdministrarArbol {
         Robot robots[] = nodo.getRobots();
         for (int i = 0; i < robots.length; i++) {
             //Calcula la posicion del robot con respecto a la meta
-            acumulador += robots[i].getPosicion() - tab.length;
+            acumulador += tab[0].length - robots[i].getPosicion();
 
         }
         acumulador /= 4;
 
         return acumulador;
     }
-//Esto no sirve pero se deja para inicializar el nodo         
+//Ahora sirve pero toca probarlo bien         
 
     public int calcularCosto(Arbol nodo) {
-        int tab[][] = nodo.getNodo();
+
         int acumulador = 0;
-        for (int i = 0; i < tab.length; i++) {
-            for (int j = 0; j < tab[0].length; j++) {
-                if (tab[i][j] == 1 || tab[i][j] == 2 || tab[i][j] == 3 || tab[i][j] == 4) {
-                    acumulador += tab.length - i;
-
-                }
-
-            }
+        Robot robots[] = nodo.getRobots();
+        for (int i = 0; i < robots.length; i++) {
+            //Calcula la posicion del robot con respecto a la meta
+            acumulador += robots[i].getPelear().getTiempo();
 
         }
-        acumulador /= 4;
 
         return acumulador;
     }
 
     ////////////////////////////////////////////////////////////         
-    public Arbol crearNodo(Arbol padre, int enemigos[], int robotspelea[], int robotsres[], int id) {
-        Arbol p=null;
-        
+    public Arbol crearNodo(int id,Arbol padre, int enemigos[], int robotspelea[], int robotsres[], int idrobot) {
+        Arbol p = null;
+
         try {
-            p = (Arbol)padre.clone();
+            p = (Arbol) padre.clone();
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(AdministrarArbol.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        int idPadre=p.getPadre();
+
+        int idPadre = p.getPadre();
         int tab[][] = new int[4][p.getNodo()[0].length];
-        tab[0]=p.getNodo()[0].clone();
-        tab[1]=p.getNodo()[1].clone();
-        tab[2]=p.getNodo()[2].clone();
-        tab[3]=p.getNodo()[3].clone();
-        
-        Arbol nodo = new Arbol(tab, idPadre, 0, 0, 0, false);
-        Robot robots[]=new Robot[4];
+        tab[0] = p.getNodo()[0].clone();
+        tab[1] = p.getNodo()[1].clone();
+        tab[2] = p.getNodo()[2].clone();
+        tab[3] = p.getNodo()[3].clone();
+
+        Arbol nodo = new Arbol(id,tab, idPadre, 0, 0, 0, false);
+        Robot robots[] = new Robot[4];
         try {
             robots[0] = (Robot) p.getRobots()[0].clone();
             robots[1] = (Robot) p.getRobots()[1].clone();
@@ -72,15 +68,18 @@ public class AdministrarArbol {
             Logger.getLogger(AdministrarArbol.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        robots[id].getPelear().tiempoPelea(enemigos);
-        robots[id].getPelear().setEnemigos(enemigos);
-
         for (int i = 0; i < robotspelea.length; i++) {
 
             robots[robotspelea[i]].getMover().setCasillas(2);
             moverRobot(robots[robotspelea[i]], nodo.getNodo());
+            //Estas dos lineas son necesarias para que no se contabilice los tiempos calculados anteriormente
+            robots[robotspelea[i]].getPelear().setTiempo(0);
+            robots[robotspelea[i]].getPelear().setEnemigos(null);
         }
-        peleaRobot(robots[id], nodo.getNodo());
+        robots[idrobot].getPelear().tiempoPelea(enemigos);
+        robots[idrobot].getPelear().setEnemigos(enemigos);
+
+        peleaRobot(robots[idrobot], nodo.getNodo());
         if (robotsres != null) {
 
             if (robots[robotsres[0]].getPosicion() != robots[robotsres[0]].getPosicion()) {
@@ -108,12 +107,11 @@ public class AdministrarArbol {
         return nodo;
     }
 
-    public Arbol InicializarNodo(int padre,int tab[][],Robot robots[]) {
+    public Arbol inicializarNodo(int id,int padre, int tab[][], Robot robots[]) {
         //nodo.setExpandido(true);
-        
 
-        Arbol nodo = new Arbol(tab, padre, 0, 0, 0, false);
-        
+        Arbol nodo = new Arbol(id,tab, padre, 0, 0, 0, false);
+
         nodo.setRobots(robots);
         int heuristica = calcularHeuristica(nodo);
         nodo.setHeuristica(heuristica);
@@ -169,10 +167,10 @@ public class AdministrarArbol {
             /////////////////////Fin Cambio/////////////////////////////////////////////////////////    
         }
     }
-    
+
     //Metodo para calcular la heurisca de cada nodo
     public void verNodos(Arbol nodo) {
-        System.out.println("Padre: "+nodo.getPadre()+" Nodo "+xd+":" );
+        System.out.println("Padre: " + nodo.getPadre() + " Nodo " + xd + ":");
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < nodo.getNodo()[0].length; j++) {
                 System.out.print(nodo.getNodo()[i][j] + " ");

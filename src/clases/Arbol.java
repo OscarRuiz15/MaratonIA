@@ -2,6 +2,8 @@ package clases;
 
 public class Arbol implements Cloneable {
 
+    //A la larga si lo puse xddd
+    private int id;
     private int nodo[][];
     private int padre;
     private Arbol hijos[];
@@ -16,7 +18,8 @@ public class Arbol implements Cloneable {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Arbol(int[][] nodo, int padre, int heuristica, int costo, int suma, boolean expandido) {
+    public Arbol(int id,int[][] nodo, int padre, int heuristica, int costo, int suma, boolean expandido) {
+        this.id=id;
         this.nodo = nodo;
         this.padre = padre;
         this.heuristica = heuristica;
@@ -25,6 +28,16 @@ public class Arbol implements Cloneable {
         this.expandido = expandido;
 
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
 
     public int[][] getNodo() {
         return nodo;

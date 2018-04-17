@@ -27,8 +27,8 @@ public class AdministrarMaraton extends UIAplicacion {
     private int tablero[][];
     private boolean decision = false;
 
-    public AdministrarMaraton(int tablero[][]) {
-        this.tablero = tablero;
+    public AdministrarMaraton(int tab[][]) {
+        this.tablero = tab;
         Mover mover = new Mover(1, 1);
         Pelear pelear = new Pelear(6, 2, 0, 0, 0);
         piedra = new Robot(1, 0, mover, pelear);
@@ -45,7 +45,7 @@ public class AdministrarMaraton extends UIAplicacion {
         pelear = new Pelear(8, 2, 0, 0, 0);
         pistola = new Robot(4, 0, mover, pelear);
 
-        arbol = new Arbol(tablero.clone(), 0, 0, 0, 0, false);
+        arbol = new Arbol(0, tablero.clone(), 0, 0, 0, 0, false);
 
         AdministrarArbol ada = new AdministrarArbol();
         Robot robots[] = {piedra, papel, tijera, pistola};
@@ -62,7 +62,28 @@ public class AdministrarMaraton extends UIAplicacion {
                     /////   CONDICIONAL PARA ELEGIR EL NODO CON MENOR COSTO+HEURISTICA       /////
                     /////               Y USARLO COMO RAIZ PARA EXPANDIR DE EL               /////
                     //////////////////////////////////////////////////////////////////////////////
-                                        
+                    if (decision) {
+
+                        int seleccionado = 100;
+                        int comparador = 100;
+                        for (int i = 0; i < creados.size(); i++) {
+                            if (!creados.get(i).isExpandido()) {
+                                if (creados.get(i).getSuma() < comparador) {
+                                    comparador = creados.get(i).getSuma();
+                                    seleccionado = i;
+                                }
+                            }
+
+                        }
+                        arbol = creados.get(seleccionado);
+                        tablero = arbol.getNodo();
+                        piedra = arbol.getRobots()[0];
+                        papel = arbol.getRobots()[1];
+                        tijera = arbol.getRobots()[2];
+                        pistola = arbol.getRobots()[3];
+                    }
+                    decision=false;
+
                     int tamtablero = tablero[0].length - 1;
 
                     //int papel.getPosicion() = papel.getPosicion();
@@ -77,6 +98,8 @@ public class AdministrarMaraton extends UIAplicacion {
                             ///////////////////////////////////////////////////
                             if (piedra.getPosicion() == papel.getPosicion() && piedra.getPosicion() == tijera.getPosicion()
                                     && piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                                arbol.setExpandido(true);
+                                arbol.setExpandido(true);
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
                                     enemigos[i] = tablero[i][piedra.getPosicion() + 1];
@@ -90,19 +113,19 @@ public class AdministrarMaraton extends UIAplicacion {
                                 Arbol nodo4 = null;
 
                                 try {
-                                    nodo1 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, null, piedra.getId() - 1);
+                                    nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, piedra.getId() - 1);
                                     creados.add(nodo1);
 
                                     robotsavanzan[0] = 0;
-                                    nodo2 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, null, papel.getId() - 1);
+                                    nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, papel.getId() - 1);
                                     creados.add(nodo2);
 
                                     robotsavanzan[1] = 1;
-                                    nodo3 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, null, tijera.getId() - 1);
+                                    nodo3 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, tijera.getId() - 1);
                                     creados.add(nodo3);
 
                                     robotsavanzan[2] = 2;
-                                    nodo4 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, null, pistola.getId() - 1);
+                                    nodo4 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, pistola.getId() - 1);
                                     creados.add(nodo4);
                                 } catch (CloneNotSupportedException ex) {
                                     Logger.getLogger(AdministrarMaraton.class.getName()).log(Level.SEVERE, null, ex);
@@ -141,6 +164,8 @@ public class AdministrarMaraton extends UIAplicacion {
                             ///////////////////////////////////////////////////
                             //Si se encuentra la piedra, papel y tijera en la misma posicion
                             else if (piedra.getPosicion() == papel.getPosicion() && piedra.getPosicion() == tijera.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                                arbol.setExpandido(true);
+                                arbol.setExpandido(true);
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
                                     enemigos[i] = tablero[i][piedra.getPosicion() + 1];
@@ -154,15 +179,15 @@ public class AdministrarMaraton extends UIAplicacion {
                                 Arbol nodo3 = null;
 
                                 try {
-                                    nodo1 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
+                                    nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                     creados.add(nodo1);
 
                                     robotsavanzan[0] = 0;
-                                    nodo2 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
+                                    nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                     creados.add(nodo2);
 
                                     robotsavanzan[1] = 1;
-                                    nodo3 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, tijera.getId() - 1);
+                                    nodo3 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, tijera.getId() - 1);
                                     creados.add(nodo3);
 
                                 } catch (CloneNotSupportedException ex) {
@@ -172,15 +197,16 @@ public class AdministrarMaraton extends UIAplicacion {
                                 Arbol hijos[] = {nodo1, nodo2, nodo3};
                                 arbol.setHijos(hijos);
 
-                                /*Robot robots[] = {piedra, papel, tijera};
-                                 for (int i = 0; i < robots.length; i++) {
-                                 robots[i].getPelear().tiempoPelea(enemigos);
-
-                                 }
-                                 elegirRobot(robots, enemigos);
-                                 decision = true;*/
+////                                Robot robots[] = {piedra, papel, tijera};
+////                                 for (int i = 0; i < robots.length; i++) {
+////                                 robots[i].getPelear().tiempoPelea(enemigos);
+////
+////                                 }
+//                                 elegirRobot(robots, enemigos);
+                                decision = true;
                             } //Si se encuentra la piedra, papel y pistola en la misma posicion
                             else if (piedra.getPosicion() == papel.getPosicion() && piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                                arbol.setExpandido(true);
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
                                     enemigos[i] = tablero[i][piedra.getPosicion() + 1];
@@ -194,15 +220,15 @@ public class AdministrarMaraton extends UIAplicacion {
                                 Arbol nodo3 = null;
 
                                 try {
-                                    nodo1 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
+                                    nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                     creados.add(nodo1);
 
                                     robotsavanzan[0] = 0;
-                                    nodo2 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
+                                    nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                     creados.add(nodo2);
 
                                     robotsavanzan[1] = 1;
-                                    nodo3 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, pistola.getId() - 1);
+                                    nodo3 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, pistola.getId() - 1);
                                     creados.add(nodo3);
 
                                 } catch (CloneNotSupportedException ex) {
@@ -212,15 +238,16 @@ public class AdministrarMaraton extends UIAplicacion {
                                 Arbol hijos[] = {nodo1, nodo2, nodo3};
                                 arbol.setHijos(hijos);
 
-                                /*Robot robots[] = {piedra, papel, pistola};
-                                 for (int i = 0; i < robots.length; i++) {
-                                 robots[i].getPelear().tiempoPelea(enemigos);
-
-                                 }
-                                 elegirRobot(robots, enemigos);
-                                 decision = true;*/
+//                                /*Robot robots[] = {piedra, papel, pistola};
+//                                 for (int i = 0; i < robots.length; i++) {
+//                                 robots[i].getPelear().tiempoPelea(enemigos);
+//
+//                                 }
+//                                 elegirRobot(robots, enemigos);
+                                decision = true;
                             } //Si se encuentra la piedra, tijera y pistola en la misma posicion
                             else if (piedra.getPosicion() == tijera.getPosicion() && piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                                arbol.setExpandido(true);
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
                                     enemigos[i] = tablero[i][piedra.getPosicion() + 1];
@@ -234,15 +261,15 @@ public class AdministrarMaraton extends UIAplicacion {
                                 Arbol nodo3 = null;
 
                                 try {
-                                    nodo1 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
+                                    nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                     creados.add(nodo1);
 
                                     robotsavanzan[0] = 0;
-                                    nodo2 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, pistola.getId() - 1);
+                                    nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, pistola.getId() - 1);
                                     creados.add(nodo2);
 
                                     robotsavanzan[1] = 2;
-                                    nodo3 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, pistola.getId() - 1);
+                                    nodo3 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, pistola.getId() - 1);
                                     creados.add(nodo3);
 
                                 } catch (CloneNotSupportedException ex) {
@@ -252,15 +279,16 @@ public class AdministrarMaraton extends UIAplicacion {
                                 Arbol hijos[] = {nodo1, nodo2, nodo3};
                                 arbol.setHijos(hijos);
 
-                                /*Robot robots[] = {piedra, pistola, tijera};
-                                 for (int i = 0; i < robots.length; i++) {
-                                 robots[i].getPelear().tiempoPelea(enemigos);
-
-                                 }
-                                 elegirRobot(robots, enemigos);
-                                 decision = true;*/
+//                                /*Robot robots[] = {piedra, pistola, tijera};
+//                                 for (int i = 0; i < robots.length; i++) {
+//                                 robots[i].getPelear().tiempoPelea(enemigos);
+//
+//                                 }
+//                                 elegirRobot(robots, enemigos);
+                                decision = true;
                             } //Si se encuentra el papel, tijera y pistola en la misma posicion
                             else if (papel.getPosicion() == tijera.getPosicion() && papel.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                                arbol.setExpandido(true);
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
                                     enemigos[i] = tablero[i][pistola.getPosicion() + 1];
@@ -274,15 +302,15 @@ public class AdministrarMaraton extends UIAplicacion {
                                 Arbol nodo3 = null;
 
                                 try {
-                                    nodo1 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, null, papel.getId() - 1);
+                                    nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, papel.getId() - 1);
                                     creados.add(nodo1);
 
                                     robotsavanzan[0] = 1;
-                                    nodo2 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, null, tijera.getId() - 1);
+                                    nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, tijera.getId() - 1);
                                     creados.add(nodo2);
 
                                     robotsavanzan[1] = 2;
-                                    nodo3 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, null, pistola.getId() - 1);
+                                    nodo3 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, pistola.getId() - 1);
                                     creados.add(nodo3);
 
                                 } catch (CloneNotSupportedException ex) {
@@ -292,13 +320,13 @@ public class AdministrarMaraton extends UIAplicacion {
                                 Arbol hijos[] = {nodo1, nodo2, nodo3};
                                 arbol.setHijos(hijos);
 
-                                /*Robot robots[] = {pistola, papel, tijera};
-                                 for (int i = 0; i < robots.length; i++) {
-                                 robots[i].getPelear().tiempoPelea(enemigos);
-
-                                 }
-                                 elegirRobot(robots, enemigos);
-                                 decision = true;*/
+//                                /*Robot robots[] = {pistola, papel, tijera};
+//                                 for (int i = 0; i < robots.length; i++) {
+//                                 robots[i].getPelear().tiempoPelea(enemigos);
+//
+//                                 }
+//                                 elegirRobot(robots, enemigos);
+                                decision = true;
                             }
                             ///////////////////////////////////////////////////
                             //FIN para decidir entre 3                       //
@@ -311,6 +339,7 @@ public class AdministrarMaraton extends UIAplicacion {
                             if (!decision) {
                                 //Si se encuentra la piedra y el papel en la misma posicion
                                 if (piedra.getPosicion() == papel.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                                    arbol.setExpandido(true);
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
                                         enemigos[i] = tablero[i][piedra.getPosicion() + 1];
@@ -318,16 +347,16 @@ public class AdministrarMaraton extends UIAplicacion {
                                     }
                                     //0,1
                                     int robotsavanzan[] = {1};
-                                    int robotsres[] = {2,3};
+                                    int robotsres[] = {2, 3};
                                     Arbol nodo1 = null;
                                     Arbol nodo2 = null;
 
                                     try {
-                                        nodo1 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
+                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                         creados.add(nodo1);
 
                                         robotsavanzan[0] = 0;
-                                        nodo2 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
+                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                         creados.add(nodo2);
 
                                     } catch (CloneNotSupportedException ex) {
@@ -336,34 +365,35 @@ public class AdministrarMaraton extends UIAplicacion {
 
                                     Arbol hijos[] = {nodo1, nodo2};
                                     arbol.setHijos(hijos);
-                                    /*Robot robots[] = {piedra, papel};
-                                     for (int i = 0; i < robots.length; i++) {
-                                     robots[i].getPelear().tiempoPelea(enemigos);
-
-                                     }
-                                     elegirRobot(robots, enemigos);
-                                     decision = true;*/
+//                                    /*Robot robots[] = {piedra, papel};
+//                                     for (int i = 0; i < robots.length; i++) {
+//                                     robots[i].getPelear().tiempoPelea(enemigos);
+//
+//                                     }
+//                                     elegirRobot(robots, enemigos);
+                                    decision = true;
                                 }
                                 //Si se encuentra la piedra y la tijera en la misma posicion
                                 if (piedra.getPosicion() == tijera.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                                    arbol.setExpandido(true);
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
                                         enemigos[i] = tablero[i][piedra.getPosicion() + 1];
 
                                     }
-                                    
+
                                     //0,2
                                     int robotsavanzan[] = {2};
-                                    int robotsres[] = {1,3};
+                                    int robotsres[] = {1, 3};
                                     Arbol nodo1 = null;
                                     Arbol nodo2 = null;
 
                                     try {
-                                        nodo1 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
+                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                         creados.add(nodo1);
 
                                         robotsavanzan[0] = 0;
-                                        nodo2 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
+                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                         creados.add(nodo2);
 
                                     } catch (CloneNotSupportedException ex) {
@@ -372,35 +402,36 @@ public class AdministrarMaraton extends UIAplicacion {
 
                                     Arbol hijos[] = {nodo1, nodo2};
                                     arbol.setHijos(hijos);
-                                    
-                                    /*Robot robots[] = {piedra, tijera};
-                                    for (int i = 0; i < robots.length; i++) {
-                                        robots[i].getPelear().tiempoPelea(enemigos);
 
-                                    }
-                                    elegirRobot(robots, enemigos);
-                                    decision = true;*/
+//                                    /*Robot robots[] = {piedra, tijera};
+//                                    for (int i = 0; i < robots.length; i++) {
+//                                        robots[i].getPelear().tiempoPelea(enemigos);
+//
+//                                    }
+//                                    elegirRobot(robots, enemigos);
+                                    decision = true;
                                 }
                                 //Si se encuentra la piedra y pistola en la misma posicion
                                 if (piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                                    arbol.setExpandido(true);
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
                                         enemigos[i] = tablero[i][pistola.getPosicion() + 1];
 
                                     }
-                                    
+
                                     //0,3
                                     int robotsavanzan[] = {3};
-                                    int robotsres[] = {1,2};
+                                    int robotsres[] = {1, 2};
                                     Arbol nodo1 = null;
                                     Arbol nodo2 = null;
 
                                     try {
-                                        nodo1 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
+                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                         creados.add(nodo1);
 
                                         robotsavanzan[0] = 0;
-                                        nodo2 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
+                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                         creados.add(nodo2);
 
                                     } catch (CloneNotSupportedException ex) {
@@ -409,34 +440,35 @@ public class AdministrarMaraton extends UIAplicacion {
 
                                     Arbol hijos[] = {nodo1, nodo2};
                                     arbol.setHijos(hijos);
-                                    /*Robot robots[] = {piedra, pistola};
-                                    for (int i = 0; i < robots.length; i++) {
-                                        robots[i].getPelear().tiempoPelea(enemigos);
-
-                                    }
-                                    elegirRobot(robots, enemigos);
-                                    decision = true;*/
+//                                    /*Robot robots[] = {piedra, pistola};
+//                                    for (int i = 0; i < robots.length; i++) {
+//                                        robots[i].getPelear().tiempoPelea(enemigos);
+//
+//                                    }
+//                                    elegirRobot(robots, enemigos);
+                                    decision = true;
                                 }
                                 //Si se encuentra el papel y la tijera en la misma posicion
                                 if (papel.getPosicion() == tijera.getPosicion() && tablero[0][papel.getPosicion() + 1] != 0) {
+                                    arbol.setExpandido(true);
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
                                         enemigos[i] = tablero[i][papel.getPosicion() + 1];
 
                                     }
-                                    
+
                                     //1,2
                                     int robotsavanzan[] = {2};
-                                    int robotsres[] = {0,3};
+                                    int robotsres[] = {0, 3};
                                     Arbol nodo1 = null;
                                     Arbol nodo2 = null;
 
                                     try {
-                                        nodo1 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
+                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                         creados.add(nodo1);
 
                                         robotsavanzan[0] = 1;
-                                        nodo2 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
+                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                         creados.add(nodo2);
 
                                     } catch (CloneNotSupportedException ex) {
@@ -445,34 +477,35 @@ public class AdministrarMaraton extends UIAplicacion {
 
                                     Arbol hijos[] = {nodo1, nodo2};
                                     arbol.setHijos(hijos);
-                                    /*Robot robots[] = {tijera, papel};
-                                    for (int i = 0; i < robots.length; i++) {
-                                        robots[i].getPelear().tiempoPelea(enemigos);
-
-                                    }
-                                    elegirRobot(robots, enemigos);
-                                    decision = true;*/
+//                                    /*Robot robots[] = {tijera, papel};
+//                                    for (int i = 0; i < robots.length; i++) {
+//                                        robots[i].getPelear().tiempoPelea(enemigos);
+//
+//                                    }
+//                                    elegirRobot(robots, enemigos);
+                                    decision = true;
                                 }
                                 //Si se encuentra el papel y la pistola en la misma posicion
                                 if (papel.getPosicion() == pistola.getPosicion() && tablero[0][papel.getPosicion() + 1] != 0) {
+                                    arbol.setExpandido(true);
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
                                         enemigos[i] = tablero[i][pistola.getPosicion() + 1];
 
                                     }
-                                    
+
                                     //1,3
                                     int robotsavanzan[] = {3};
-                                    int robotsres[] = {0,2};
+                                    int robotsres[] = {0, 2};
                                     Arbol nodo1 = null;
                                     Arbol nodo2 = null;
 
                                     try {
-                                        nodo1 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
+                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                         creados.add(nodo1);
 
                                         robotsavanzan[0] = 1;
-                                        nodo2 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
+                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                         creados.add(nodo2);
 
                                     } catch (CloneNotSupportedException ex) {
@@ -481,34 +514,35 @@ public class AdministrarMaraton extends UIAplicacion {
 
                                     Arbol hijos[] = {nodo1, nodo2};
                                     arbol.setHijos(hijos);
-                                    /*Robot robots[] = {pistola, papel};
-                                    for (int i = 0; i < robots.length; i++) {
-                                        robots[i].getPelear().tiempoPelea(enemigos);
-
-                                    }
-                                    elegirRobot(robots, enemigos);
-                                    decision = true;*/
+//                                    /*Robot robots[] = {pistola, papel};
+//                                    for (int i = 0; i < robots.length; i++) {
+//                                        robots[i].getPelear().tiempoPelea(enemigos);
+//
+//                                    }
+//                                    elegirRobot(robots, enemigos);
+                                    decision = true;
                                 }
                                 //Si se encuentra la tijera y la pistola en la misma posicion
                                 if (tijera.getPosicion() == pistola.getPosicion() && tablero[0][pistola.getPosicion() + 1] != 0) {
+                                    arbol.setExpandido(true);
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
                                         enemigos[i] = tablero[i][pistola.getPosicion() + 1];
 
                                     }
-                                    
+
                                     //2,3
                                     int robotsavanzan[] = {3};
-                                    int robotsres[] = {0,1};
+                                    int robotsres[] = {0, 1};
                                     Arbol nodo1 = null;
                                     Arbol nodo2 = null;
 
                                     try {
-                                        nodo1 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
+                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                         creados.add(nodo1);
 
                                         robotsavanzan[0] = 1;
-                                        nodo2 = ada.crearNodo((Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
+                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                         creados.add(nodo2);
 
                                     } catch (CloneNotSupportedException ex) {
@@ -517,13 +551,13 @@ public class AdministrarMaraton extends UIAplicacion {
 
                                     Arbol hijos[] = {nodo1, nodo2};
                                     arbol.setHijos(hijos);
-                                    /*Robot robots[] = {tijera, pistola};
-                                    for (int i = 0; i < robots.length; i++) {
-                                        robots[i].getPelear().tiempoPelea(enemigos);
-
-                                    }
-                                    elegirRobot(robots, enemigos);
-                                    decision = true;*/
+//                                    /*Robot robots[] = {tijera, pistola};
+//                                    for (int i = 0; i < robots.length; i++) {
+//                                        robots[i].getPelear().tiempoPelea(enemigos);
+//
+//                                    }
+//                                    elegirRobot(robots, enemigos);
+                                    decision = true;
                                 }
 
                             }
@@ -544,6 +578,8 @@ public class AdministrarMaraton extends UIAplicacion {
                                     //Si en la posicion siguiente a donde esta parada la piedra es un enemigo (mayor a 4)
                                     //entonces el elegido es la piedra
                                     if (tablero[0][piedra.getPosicion() + 1] > 4 && piedra.getPelear().getTiempo() == 0) {
+                                        arbol.setExpandido(true);
+                                        arbol.setExpandido(true);
                                         int enemigos[] = new int[4];
                                         for (int i = 0; i < enemigos.length; i++) {
                                             enemigos[i] = tablero[i][piedra.getPosicion() + 1];
@@ -554,11 +590,13 @@ public class AdministrarMaraton extends UIAplicacion {
                                             robots[i].getPelear().tiempoPelea(enemigos);
                                         }
                                         elegirRobot(robots, enemigos);
-                                        decision = true;
+//                                        decision = true;
                                     }
                                     //Si en la posicion siguiente a donde esta parada el papel es un enemigo (mayor a 4)
                                     //entonces el elegido es el papel
                                     if (tablero[0][papel.getPosicion() + 1] > 4 && papel.getPelear().getTiempo() == 0) {
+                                        arbol.setExpandido(true);
+                                        arbol.setExpandido(true);
                                         int enemigos[] = new int[4];
                                         for (int i = 0; i < enemigos.length; i++) {
                                             enemigos[i] = tablero[i][papel.getPosicion() + 1];
@@ -569,11 +607,13 @@ public class AdministrarMaraton extends UIAplicacion {
 
                                         }
                                         elegirRobot(robots, enemigos);
-                                        decision = true;
+//                                        decision = true;
                                     }
                                     //Si en la posicion siguiente a donde esta parada la tijera es un enemigo (mayor a 4)
                                     //entonces el elegido es la tijera
                                     if (tablero[0][tijera.getPosicion() + 1] > 4 && tijera.getPelear().getTiempo() == 0) {
+                                        arbol.setExpandido(true);
+                                        arbol.setExpandido(true);
                                         int enemigos[] = new int[4];
                                         for (int i = 0; i < enemigos.length; i++) {
                                             enemigos[i] = tablero[i][tijera.getPosicion() + 1];
@@ -583,11 +623,13 @@ public class AdministrarMaraton extends UIAplicacion {
                                             robots[i].getPelear().tiempoPelea(enemigos);
                                         }
                                         elegirRobot(robots, enemigos);
-                                        decision = true;
+//                                        decision = true;
                                     }
                                     //Si en la posicion siguiente a donde esta parada la pistola es un enemigo (mayor a 4)
                                     //entonces el elegido es la pistola
                                     if (tablero[0][pistola.getPosicion() + 1] > 4 && pistola.getPelear().getTiempo() == 0) {
+                                        arbol.setExpandido(true);
+                                        arbol.setExpandido(true);
                                         int enemigos[] = new int[4];
                                         for (int i = 0; i < enemigos.length; i++) {
                                             enemigos[i] = tablero[i][pistola.getPosicion() + 1];
@@ -600,7 +642,7 @@ public class AdministrarMaraton extends UIAplicacion {
 
                                         }
                                         elegirRobot(robots, enemigos);
-                                        decision = true;
+//                                        decision = true;
                                     }
                                     //Estos condicionales son diferentes a los demas (!=0) porque se daba el caso en el que
                                     //el siguiente no era un enemigo, si no otro robot, y lo tomaba como enemigo y se jodia
@@ -639,8 +681,6 @@ public class AdministrarMaraton extends UIAplicacion {
                             }
                             ///////////////////////////////////////////////////
                             //FIN Condicionales para pelear                  //
-
-                            decision = false;
 
                             mostrarTablero();
 
@@ -740,6 +780,8 @@ public class AdministrarMaraton extends UIAplicacion {
             //Si en la posicion siguiente a donde esta parada la piedra es un enemigo (mayor a 4)
             //entonces el elegido es la piedra
             if (tablero[0][piedra.getPosicion() + 1] > 4 && piedra.getPelear().getTiempo() == 0) {
+                arbol.setExpandido(true);
+                arbol.setExpandido(true);
                 int enemigos[] = new int[4];
                 for (int i = 0; i < enemigos.length; i++) {
                     enemigos[i] = tablero[i][piedra.getPosicion() + 1];
@@ -756,6 +798,8 @@ public class AdministrarMaraton extends UIAplicacion {
             //Si en la posicion siguiente a donde esta parada el papel es un enemigo (mayor a 4)
             //entonces el elegido es el papel
             if (tablero[0][papel.getPosicion() + 1] > 4 && papel.getPelear().getTiempo() == 0) {
+                arbol.setExpandido(true);
+                arbol.setExpandido(true);
                 int enemigos[] = new int[4];
                 for (int i = 0; i < enemigos.length; i++) {
                     enemigos[i] = tablero[i][papel.getPosicion() + 1];
@@ -772,6 +816,8 @@ public class AdministrarMaraton extends UIAplicacion {
             //Si en la posicion siguiente a donde esta parada la tijera es un enemigo (mayor a 4)
             //entonces el elegido es la tijera
             if (tablero[0][tijera.getPosicion() + 1] > 4 && tijera.getPelear().getTiempo() == 0) {
+                arbol.setExpandido(true);
+                arbol.setExpandido(true);
                 int enemigos[] = new int[4];
                 for (int i = 0; i < enemigos.length; i++) {
                     enemigos[i] = tablero[i][tijera.getPosicion() + 1];
@@ -787,6 +833,8 @@ public class AdministrarMaraton extends UIAplicacion {
             //Si en la posicion siguiente a donde esta parada la pistola es un enemigo (mayor a 4)
             //entonces el elegido es la pistola
             if (tablero[0][pistola.getPosicion() + 1] > 4 && pistola.getPelear().getTiempo() == 0) {
+                arbol.setExpandido(true);
+                arbol.setExpandido(true);
                 int enemigos[] = new int[4];
                 for (int i = 0; i < enemigos.length; i++) {
                     enemigos[i] = tablero[i][pistola.getPosicion() + 1];
