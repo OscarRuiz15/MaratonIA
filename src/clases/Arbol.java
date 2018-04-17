@@ -11,17 +11,14 @@ public class Arbol implements Cloneable {
     private boolean expandido;
     private Robot robots[];
 
-    
-
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     public Arbol(int[][] nodo, int padre, int heuristica, int costo, int suma, boolean expandido) {
         this.nodo = nodo;
         this.padre = padre;
-
         this.heuristica = heuristica;
         this.costo = costo;
         this.suma = suma;
@@ -44,8 +41,6 @@ public class Arbol implements Cloneable {
     public void setPadre(int padre) {
         this.padre = padre;
     }
-
-   
 
     public Arbol[] getHijos() {
         return hijos;

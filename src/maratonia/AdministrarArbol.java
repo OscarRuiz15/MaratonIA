@@ -47,19 +47,21 @@ public class AdministrarArbol {
     ////////////////////////////////////////////////////////////         
     public Arbol crearNodo(Arbol padre, int enemigos[], int robotspelea[], int robotsres[], int id) {
         Arbol p=null;
+        
         try {
             p = (Arbol)padre.clone();
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(AdministrarArbol.class.getName()).log(Level.SEVERE, null, ex);
         }
-        int tab[][] = new int[4][14];
+        
+        int idPadre=p.getPadre();
+        int tab[][] = new int[4][p.getNodo()[0].length];
         tab[0]=p.getNodo()[0].clone();
         tab[1]=p.getNodo()[1].clone();
         tab[2]=p.getNodo()[2].clone();
         tab[3]=p.getNodo()[3].clone();
         
-
-        Arbol nodo = new Arbol(tab, 1, 0, 0, 0, false);
+        Arbol nodo = new Arbol(tab, idPadre, 0, 0, 0, false);
         Robot robots[]=new Robot[4];
         try {
             robots[0] = (Robot) p.getRobots()[0].clone();
@@ -170,7 +172,7 @@ public class AdministrarArbol {
     
     //Metodo para calcular la heurisca de cada nodo
     public void verNodos(Arbol nodo) {
-        System.out.println(xd+":" );
+        System.out.println("Padre: "+nodo.getPadre()+" Nodo "+xd+":" );
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < nodo.getNodo()[0].length; j++) {
                 System.out.print(nodo.getNodo()[i][j] + " ");
