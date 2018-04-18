@@ -1,7 +1,7 @@
 package clases;
 
 
-public class Mover extends Accion{
+public class Mover extends Accion implements Cloneable{
     
     private int casillas;
 
@@ -9,6 +9,12 @@ public class Mover extends Accion{
         super(costo);
         this.casillas=casillas;
         
+    }
+    
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getCasillas() {

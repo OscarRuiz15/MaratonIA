@@ -1,6 +1,6 @@
 package clases;
 
-public class Pelear extends Accion {
+public class Pelear extends Accion implements Cloneable{
 
     private int fuerza;
     //Tiempo total
@@ -18,6 +18,12 @@ public class Pelear extends Accion {
         this.tiempoenemigo = tiempoenemigo;
     }
 
+    
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
     public int[] getEnemigos() {
         return enemigos;
     }

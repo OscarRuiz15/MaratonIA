@@ -1,6 +1,8 @@
 package maratonia;
 
 import clases.Arbol;
+import clases.Mover;
+import clases.Pelear;
 import clases.Robot;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,10 +67,16 @@ public class AdministrarArbol {
         Arbol nodo = new Arbol(id, tab, idPadre, 0, 0, 0, false);
         Robot robots[] = new Robot[4];
         try {
-            robots[0] = (Robot) p.getRobots()[0].clone();
-            robots[1] = (Robot) p.getRobots()[1].clone();
-            robots[2] = (Robot) p.getRobots()[2].clone();
-            robots[3] = (Robot) p.getRobots()[3].clone();
+            for (int i = 0; i < robots.length; i++) {
+                robots[i] = (Robot) p.getRobots()[i].clone();
+                Pelear pe = (Pelear) robots[i].getPelear().clone();
+                Mover mo = (Mover) robots[i].getMover().clone();
+                robots[i].setMover(mo);
+                robots[i].setPelear(pe);
+
+            }
+
+          
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(AdministrarArbol.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,8 +91,6 @@ public class AdministrarArbol {
         }
         robots[idrobot].getPelear().tiempoPelea(ene);
         robots[idrobot].getPelear().setEnemigos(ene);
-
-        
 
         peleaRobot(robots[idrobot], nodo.getNodo());
         if (robotsres != null) {
@@ -184,7 +190,7 @@ public class AdministrarArbol {
             }
             System.out.println("");
         }
-        System.out.println("Suma: "+nodo.getSuma());
+        System.out.println("Suma: " + nodo.getSuma());
         System.out.println("Piedra " + nodo.getRobots()[0].getPelear().getTiempo());
         System.out.println("Papel " + nodo.getRobots()[1].getPelear().getTiempo());
         System.out.println("Tijera " + nodo.getRobots()[2].getPelear().getTiempo());
