@@ -73,7 +73,6 @@ public class AdministrarMaraton extends UIAplicacion {
                                     seleccionado = i;
                                 }
                             }
-
                         }
                         arbol = creados.get(seleccionado);
                         tablero = arbol.getNodo();
@@ -82,7 +81,15 @@ public class AdministrarMaraton extends UIAplicacion {
                         tijera = arbol.getRobots()[2];
                         pistola = arbol.getRobots()[3];
                     }
-                    decision=false;
+                    System.out.println("Arbol Seleccionado");
+                    for (int i = 0; i < 4; i++) {
+                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                            System.out.print(arbol.getNodo()[i][j]+" ");
+                        }
+                        System.out.println("");
+                    }
+                    System.out.println("Total arbol "+arbol.getSuma());
+                    decision = false;
 
                     int tamtablero = tablero[0].length - 1;
 
@@ -113,17 +120,45 @@ public class AdministrarMaraton extends UIAplicacion {
                                 Arbol nodo4 = null;
 
                                 try {
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, piedra.getId() - 1);
                                     creados.add(nodo1);
 
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     robotsavanzan[0] = 0;
                                     nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, papel.getId() - 1);
                                     creados.add(nodo2);
 
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     robotsavanzan[1] = 1;
                                     nodo3 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, tijera.getId() - 1);
                                     creados.add(nodo3);
 
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     robotsavanzan[2] = 2;
                                     nodo4 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, pistola.getId() - 1);
                                     creados.add(nodo4);
@@ -133,6 +168,7 @@ public class AdministrarMaraton extends UIAplicacion {
 
                                 Arbol hijos[] = {nodo1, nodo2, nodo3, nodo4};
                                 arbol.setHijos(hijos);
+                                decision = true;
 //                                nodo1.getRobots()[0].getPelear().tiempoPelea(enemigos);
 //                                nodo1.getRobots()[0].getPelear().setEnemigos(enemigos);
 //
@@ -179,13 +215,34 @@ public class AdministrarMaraton extends UIAplicacion {
                                 Arbol nodo3 = null;
 
                                 try {
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                     creados.add(nodo1);
 
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     robotsavanzan[0] = 0;
                                     nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                     creados.add(nodo2);
 
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     robotsavanzan[1] = 1;
                                     nodo3 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, tijera.getId() - 1);
                                     creados.add(nodo3);
@@ -220,13 +277,34 @@ public class AdministrarMaraton extends UIAplicacion {
                                 Arbol nodo3 = null;
 
                                 try {
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                     creados.add(nodo1);
 
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     robotsavanzan[0] = 0;
                                     nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                     creados.add(nodo2);
 
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     robotsavanzan[1] = 1;
                                     nodo3 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, pistola.getId() - 1);
                                     creados.add(nodo3);
@@ -261,13 +339,34 @@ public class AdministrarMaraton extends UIAplicacion {
                                 Arbol nodo3 = null;
 
                                 try {
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                     creados.add(nodo1);
 
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     robotsavanzan[0] = 0;
                                     nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, pistola.getId() - 1);
                                     creados.add(nodo2);
 
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     robotsavanzan[1] = 2;
                                     nodo3 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, pistola.getId() - 1);
                                     creados.add(nodo3);
@@ -302,13 +401,34 @@ public class AdministrarMaraton extends UIAplicacion {
                                 Arbol nodo3 = null;
 
                                 try {
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, papel.getId() - 1);
                                     creados.add(nodo1);
 
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     robotsavanzan[0] = 1;
                                     nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, tijera.getId() - 1);
                                     creados.add(nodo2);
 
+                                    System.out.println("Padre: ");
+                                    for (int i = 0; i < 4; i++) {
+                                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                            System.out.print(arbol.getNodo()[i][j] + " ");
+                                        }
+                                        System.out.println("");
+                                    }
                                     robotsavanzan[1] = 2;
                                     nodo3 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, pistola.getId() - 1);
                                     creados.add(nodo3);
@@ -352,9 +472,23 @@ public class AdministrarMaraton extends UIAplicacion {
                                     Arbol nodo2 = null;
 
                                     try {
+                                        System.out.println("Padre: ");
+                                        for (int i = 0; i < 4; i++) {
+                                            for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                                System.out.print(arbol.getNodo()[i][j] + " ");
+                                            }
+                                            System.out.println("");
+                                        }
                                         nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                         creados.add(nodo1);
 
+                                        System.out.println("Padre: ");
+                                        for (int i = 0; i < 4; i++) {
+                                            for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                                System.out.print(arbol.getNodo()[i][j] + " ");
+                                            }
+                                            System.out.println("");
+                                        }
                                         robotsavanzan[0] = 0;
                                         nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                         creados.add(nodo2);
@@ -389,9 +523,23 @@ public class AdministrarMaraton extends UIAplicacion {
                                     Arbol nodo2 = null;
 
                                     try {
+                                        System.out.println("Padre: ");
+                                        for (int i = 0; i < 4; i++) {
+                                            for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                                System.out.print(arbol.getNodo()[i][j] + " ");
+                                            }
+                                            System.out.println("");
+                                        }
                                         nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                         creados.add(nodo1);
 
+                                        System.out.println("Padre: ");
+                                        for (int i = 0; i < 4; i++) {
+                                            for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                                System.out.print(arbol.getNodo()[i][j] + " ");
+                                            }
+                                            System.out.println("");
+                                        }
                                         robotsavanzan[0] = 0;
                                         nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                         creados.add(nodo2);
@@ -427,9 +575,23 @@ public class AdministrarMaraton extends UIAplicacion {
                                     Arbol nodo2 = null;
 
                                     try {
+                                        System.out.println("Padre: ");
+                                        for (int i = 0; i < 4; i++) {
+                                            for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                                System.out.print(arbol.getNodo()[i][j] + " ");
+                                            }
+                                            System.out.println("");
+                                        }
                                         nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                         creados.add(nodo1);
 
+                                        System.out.println("Padre: ");
+                                        for (int i = 0; i < 4; i++) {
+                                            for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                                System.out.print(arbol.getNodo()[i][j] + " ");
+                                            }
+                                            System.out.println("");
+                                        }
                                         robotsavanzan[0] = 0;
                                         nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                         creados.add(nodo2);
@@ -464,9 +626,23 @@ public class AdministrarMaraton extends UIAplicacion {
                                     Arbol nodo2 = null;
 
                                     try {
+                                        System.out.println("Padre: ");
+                                        for (int i = 0; i < 4; i++) {
+                                            for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                                System.out.print(arbol.getNodo()[i][j] + " ");
+                                            }
+                                            System.out.println("");
+                                        }
                                         nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                         creados.add(nodo1);
 
+                                        System.out.println("Padre: ");
+                                        for (int i = 0; i < 4; i++) {
+                                            for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                                System.out.print(arbol.getNodo()[i][j] + " ");
+                                            }
+                                            System.out.println("");
+                                        }
                                         robotsavanzan[0] = 1;
                                         nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                         creados.add(nodo2);
@@ -501,9 +677,23 @@ public class AdministrarMaraton extends UIAplicacion {
                                     Arbol nodo2 = null;
 
                                     try {
+                                        System.out.println("Padre: ");
+                                        for (int i = 0; i < 4; i++) {
+                                            for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                                System.out.print(arbol.getNodo()[i][j] + " ");
+                                            }
+                                            System.out.println("");
+                                        }
                                         nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                         creados.add(nodo1);
 
+                                        System.out.println("Padre: ");
+                                        for (int i = 0; i < 4; i++) {
+                                            for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                                System.out.print(arbol.getNodo()[i][j] + " ");
+                                            }
+                                            System.out.println("");
+                                        }
                                         robotsavanzan[0] = 1;
                                         nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                         creados.add(nodo2);
@@ -538,9 +728,23 @@ public class AdministrarMaraton extends UIAplicacion {
                                     Arbol nodo2 = null;
 
                                     try {
+                                        System.out.println("Padre: ");
+                                        for (int i = 0; i < 4; i++) {
+                                            for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                                System.out.print(arbol.getNodo()[i][j] + " ");
+                                            }
+                                            System.out.println("");
+                                        }
                                         nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
                                         creados.add(nodo1);
 
+                                        System.out.println("Padre: ");
+                                        for (int i = 0; i < 4; i++) {
+                                            for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+                                                System.out.print(arbol.getNodo()[i][j] + " ");
+                                            }
+                                            System.out.println("");
+                                        }
                                         robotsavanzan[0] = 1;
                                         nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
                                         creados.add(nodo2);

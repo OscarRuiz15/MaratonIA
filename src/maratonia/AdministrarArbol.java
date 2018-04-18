@@ -50,7 +50,7 @@ public class AdministrarArbol {
             Logger.getLogger(AdministrarArbol.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        int idPadre = p.getPadre();
+        int idPadre = p.getPadre(); //Deberia ser getId(?
         int tab[][] = new int[4][p.getNodo()[0].length];
         tab[0] = p.getNodo()[0].clone();
         tab[1] = p.getNodo()[1].clone();
@@ -170,7 +170,7 @@ public class AdministrarArbol {
 
     //Metodo para calcular la heurisca de cada nodo
     public void verNodos(Arbol nodo) {
-        System.out.println("Padre: " + nodo.getPadre() + " Nodo " + xd + ":");
+        System.out.println(" Nodo " + nodo.getId() + ":");
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < nodo.getNodo()[0].length; j++) {
                 System.out.print(nodo.getNodo()[i][j] + " ");
