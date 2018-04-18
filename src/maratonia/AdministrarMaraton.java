@@ -81,14 +81,18 @@ public class AdministrarMaraton extends UIAplicacion {
                         tijera = arbol.getRobots()[2];
                         pistola = arbol.getRobots()[3];
                     }
-                    System.out.println("Arbol Seleccionado");
+                    System.out.println("\nNueva iteracion:\nArbol Seleccionado:");
                     for (int i = 0; i < 4; i++) {
                         for (int j = 0; j < arbol.getNodo()[0].length; j++) {
-                            System.out.print(arbol.getNodo()[i][j]+" ");
+                            System.out.print(arbol.getNodo()[i][j] + " ");
                         }
                         System.out.println("");
                     }
-                    System.out.println("Total arbol "+arbol.getSuma());
+                    System.out.println("Total arbol " + arbol.getSuma());
+                    System.out.println("Piedra " + piedra.getPelear().getTiempo());
+                    System.out.println("Papel " + papel.getPelear().getTiempo());
+                    System.out.println("Tijera " + tijera.getPelear().getTiempo());
+                    System.out.println("Pistola " + pistola.getPelear().getTiempo());
                     decision = false;
 
                     int tamtablero = tablero[0].length - 1;
@@ -106,11 +110,9 @@ public class AdministrarMaraton extends UIAplicacion {
                             if (piedra.getPosicion() == papel.getPosicion() && piedra.getPosicion() == tijera.getPosicion()
                                     && piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
                                 arbol.setExpandido(true);
-                                arbol.setExpandido(true);
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
                                     enemigos[i] = tablero[i][piedra.getPosicion() + 1];
-
                                 }
 
                                 int robotsavanzan[] = {1, 2, 3};
@@ -120,17 +122,17 @@ public class AdministrarMaraton extends UIAplicacion {
                                 Arbol nodo4 = null;
 
                                 try {
-                                    System.out.println("Padre: ");
+                                    System.out.println("Arbol Padre: ");
                                     for (int i = 0; i < 4; i++) {
                                         for (int j = 0; j < arbol.getNodo()[0].length; j++) {
                                             System.out.print(arbol.getNodo()[i][j] + " ");
                                         }
                                         System.out.println("");
                                     }
-                                    nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, piedra.getId() - 1);
+                                    nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos.clone(), robotsavanzan, null, piedra.getId() - 1);
                                     creados.add(nodo1);
 
-                                    System.out.println("Padre: ");
+                                    System.out.println("ArbolPadre: ");
                                     for (int i = 0; i < 4; i++) {
                                         for (int j = 0; j < arbol.getNodo()[0].length; j++) {
                                             System.out.print(arbol.getNodo()[i][j] + " ");
@@ -138,10 +140,10 @@ public class AdministrarMaraton extends UIAplicacion {
                                         System.out.println("");
                                     }
                                     robotsavanzan[0] = 0;
-                                    nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, papel.getId() - 1);
+                                    nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos.clone(), robotsavanzan, null, papel.getId() - 1);
                                     creados.add(nodo2);
 
-                                    System.out.println("Padre: ");
+                                    System.out.println("Arbol Padre: ");
                                     for (int i = 0; i < 4; i++) {
                                         for (int j = 0; j < arbol.getNodo()[0].length; j++) {
                                             System.out.print(arbol.getNodo()[i][j] + " ");
@@ -149,10 +151,10 @@ public class AdministrarMaraton extends UIAplicacion {
                                         System.out.println("");
                                     }
                                     robotsavanzan[1] = 1;
-                                    nodo3 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, tijera.getId() - 1);
+                                    nodo3 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos.clone(), robotsavanzan, null, tijera.getId() - 1);
                                     creados.add(nodo3);
 
-                                    System.out.println("Padre: ");
+                                    System.out.println("Arbol Padre: ");
                                     for (int i = 0; i < 4; i++) {
                                         for (int j = 0; j < arbol.getNodo()[0].length; j++) {
                                             System.out.print(arbol.getNodo()[i][j] + " ");
@@ -160,7 +162,7 @@ public class AdministrarMaraton extends UIAplicacion {
                                         System.out.println("");
                                     }
                                     robotsavanzan[2] = 2;
-                                    nodo4 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, null, pistola.getId() - 1);
+                                    nodo4 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos.clone(), robotsavanzan, null, pistola.getId() - 1);
                                     creados.add(nodo4);
                                 } catch (CloneNotSupportedException ex) {
                                     Logger.getLogger(AdministrarMaraton.class.getName()).log(Level.SEVERE, null, ex);
@@ -200,7 +202,6 @@ public class AdministrarMaraton extends UIAplicacion {
                             ///////////////////////////////////////////////////
                             //Si se encuentra la piedra, papel y tijera en la misma posicion
                             else if (piedra.getPosicion() == papel.getPosicion() && piedra.getPosicion() == tijera.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
-                                arbol.setExpandido(true);
                                 arbol.setExpandido(true);
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
@@ -783,7 +784,6 @@ public class AdministrarMaraton extends UIAplicacion {
                                     //entonces el elegido es la piedra
                                     if (tablero[0][piedra.getPosicion() + 1] > 4 && piedra.getPelear().getTiempo() == 0) {
                                         arbol.setExpandido(true);
-                                        arbol.setExpandido(true);
                                         int enemigos[] = new int[4];
                                         for (int i = 0; i < enemigos.length; i++) {
                                             enemigos[i] = tablero[i][piedra.getPosicion() + 1];
@@ -799,7 +799,6 @@ public class AdministrarMaraton extends UIAplicacion {
                                     //Si en la posicion siguiente a donde esta parada el papel es un enemigo (mayor a 4)
                                     //entonces el elegido es el papel
                                     if (tablero[0][papel.getPosicion() + 1] > 4 && papel.getPelear().getTiempo() == 0) {
-                                        arbol.setExpandido(true);
                                         arbol.setExpandido(true);
                                         int enemigos[] = new int[4];
                                         for (int i = 0; i < enemigos.length; i++) {
@@ -817,7 +816,6 @@ public class AdministrarMaraton extends UIAplicacion {
                                     //entonces el elegido es la tijera
                                     if (tablero[0][tijera.getPosicion() + 1] > 4 && tijera.getPelear().getTiempo() == 0) {
                                         arbol.setExpandido(true);
-                                        arbol.setExpandido(true);
                                         int enemigos[] = new int[4];
                                         for (int i = 0; i < enemigos.length; i++) {
                                             enemigos[i] = tablero[i][tijera.getPosicion() + 1];
@@ -832,7 +830,6 @@ public class AdministrarMaraton extends UIAplicacion {
                                     //Si en la posicion siguiente a donde esta parada la pistola es un enemigo (mayor a 4)
                                     //entonces el elegido es la pistola
                                     if (tablero[0][pistola.getPosicion() + 1] > 4 && pistola.getPelear().getTiempo() == 0) {
-                                        arbol.setExpandido(true);
                                         arbol.setExpandido(true);
                                         int enemigos[] = new int[4];
                                         for (int i = 0; i < enemigos.length; i++) {
@@ -888,7 +885,7 @@ public class AdministrarMaraton extends UIAplicacion {
 
                             mostrarTablero();
 
-                            Thread.sleep(500);
+                            Thread.sleep(1000);
                         }
 
                     } catch (InterruptedException e) {
@@ -1135,8 +1132,10 @@ public class AdministrarMaraton extends UIAplicacion {
     }
 
     public void mostrarTablero() {
+        System.out.println("Tablero:");
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[0].length; j++) {
+                System.out.print(tablero[i][j] + " ");
                 if (tablero[i][j] == 0) {
                     campos[i][j].setIcon(null);
                 }
@@ -1169,7 +1168,7 @@ public class AdministrarMaraton extends UIAplicacion {
                     campos[i][j].setName("Blanco");
                 }
             }
-
+            System.out.println("");
         }
     }
 
