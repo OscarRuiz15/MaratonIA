@@ -92,7 +92,7 @@ public class AdministrarMaraton extends UIAplicacion {
                     if (decision) {
 
                         int seleccionado = 100;
-                        int comparador = 100;
+                        int comparador = 100000;
                         for (int i = 0; i < creados.size(); i++) {
                             if (!creados.get(i).isExpandido()) {
                                 if (creados.get(i).getSuma() < comparador) {
@@ -379,11 +379,13 @@ public class AdministrarMaraton extends UIAplicacion {
                                     Arbol nodo2 = null;
 
                                     try {
-                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
+                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos,
+                                                robotsavanzan, robotsres, piedra.getId() - 1);
                                         creados.add(nodo1);
 
                                         robotsavanzan[0] = 0;
-                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
+                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos,
+                                                robotsavanzan, robotsres, papel.getId() - 1);
                                         creados.add(nodo2);
                                     } catch (CloneNotSupportedException ex) {
                                         Logger.getLogger(AdministrarMaraton.class.getName()).log(Level.SEVERE, null, ex);
@@ -413,11 +415,13 @@ public class AdministrarMaraton extends UIAplicacion {
                                     Arbol nodo2 = null;
 
                                     try {
-                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
+                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos,
+                                                robotsavanzan, robotsres, piedra.getId() - 1);
                                         creados.add(nodo1);
 
                                         robotsavanzan[0] = 0;
-                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
+                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos,
+                                                robotsavanzan, robotsres, tijera.getId() - 1);
                                         creados.add(nodo2);
                                     } catch (CloneNotSupportedException ex) {
                                         Logger.getLogger(AdministrarMaraton.class.getName()).log(Level.SEVERE, null, ex);
@@ -449,11 +453,13 @@ public class AdministrarMaraton extends UIAplicacion {
                                     Arbol nodo2 = null;
 
                                     try {
-                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
+                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos,
+                                                robotsavanzan, robotsres, piedra.getId() - 1);
                                         creados.add(nodo1);
 
                                         robotsavanzan[0] = 0;
-                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
+                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos,
+                                                robotsavanzan, robotsres, pistola.getId() - 1);
                                         creados.add(nodo2);
                                     } catch (CloneNotSupportedException ex) {
                                         Logger.getLogger(AdministrarMaraton.class.getName()).log(Level.SEVERE, null, ex);
@@ -483,11 +489,13 @@ public class AdministrarMaraton extends UIAplicacion {
                                     Arbol nodo2 = null;
 
                                     try {
-                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
+                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos,
+                                                robotsavanzan, robotsres, papel.getId() - 1);
                                         creados.add(nodo1);
 
                                         robotsavanzan[0] = 1;
-                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
+                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos,
+                                                robotsavanzan, robotsres, tijera.getId() - 1);
                                         creados.add(nodo2);
                                     } catch (CloneNotSupportedException ex) {
                                         Logger.getLogger(AdministrarMaraton.class.getName()).log(Level.SEVERE, null, ex);
@@ -517,11 +525,13 @@ public class AdministrarMaraton extends UIAplicacion {
                                     Arbol nodo2 = null;
 
                                     try {
-                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
+                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos,
+                                                robotsavanzan, robotsres, papel.getId() - 1);
                                         creados.add(nodo1);
 
                                         robotsavanzan[0] = 1;
-                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
+                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan,
+                                                robotsres, pistola.getId() - 1);
                                         creados.add(nodo2);
                                     } catch (CloneNotSupportedException ex) {
                                         Logger.getLogger(AdministrarMaraton.class.getName()).log(Level.SEVERE, null, ex);
@@ -551,11 +561,13 @@ public class AdministrarMaraton extends UIAplicacion {
                                     Arbol nodo2 = null;
 
                                     try {
-                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, piedra.getId() - 1);
+                                        nodo1 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos,
+                                                robotsavanzan, robotsres, tijera.getId() - 1);
                                         creados.add(nodo1);
 
-                                        robotsavanzan[0] = 1;
-                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, papel.getId() - 1);
+                                        robotsavanzan[0] = 2;
+                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos
+                                                , robotsavanzan, robotsres, pistola.getId() - 1);
                                         creados.add(nodo2);
                                     } catch (CloneNotSupportedException ex) {
                                         Logger.getLogger(AdministrarMaraton.class.getName()).log(Level.SEVERE, null, ex);
@@ -692,49 +704,49 @@ public class AdministrarMaraton extends UIAplicacion {
 
                             ////Ayuda o venganza
                             //Piedra
-                            if (((piedra.getPosicion() + 1) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
-                                System.out.println("Piedra se venga de papel");
-                                papel.getPelear().setTiempo((papel.getPelear().getTiempo() - 1) * 2);
-                            }
-                            if (((piedra.getPosicion() + 1) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
-                                System.out.println("Piedra ayuda a tijera");
-                                tijera.getPelear().setTiempo((tijera.getPelear().getTiempo() - 1) / 2);
-                            }
-
-                            //Papel
-                            if (((papel.getPosicion() + 1) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
-                                System.out.println("Papel se venga de tijera");
-                                tijera.getPelear().setTiempo((tijera.getPelear().getTiempo() - 1) * 2);
-                            }
-                            if (((papel.getPosicion() + 1) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
-                                System.out.println("Papel ayuda a piedra");
-                                piedra.getPelear().setTiempo((piedra.getPelear().getTiempo() - 1) / 2);
-                            }
-
-                            //Tijera
-                            if (((tijera.getPosicion() + 1) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
-                                System.out.println("Tijera se venga de piedra");
-                                piedra.getPelear().setTiempo((piedra.getPelear().getTiempo() - 1) * 2);
-                            }
-                            if (((tijera.getPosicion() + 1) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
-                                System.out.println("Tijera ayuda a papel");
-                                papel.getPelear().setTiempo((papel.getPelear().getTiempo() - 1) / 2);
-                            }
-
-                            //Pistola
-                            if (((pistola.getPosicion() + 1) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
-                                System.out.println("Pistola se venga de piedra");
-                                piedra.getPelear().setTiempo((piedra.getPelear().getTiempo() - 1) * 2);
-                            }
-                            if (((pistola.getPosicion() + 1) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
-                                System.out.println("Pistola se venga de papel");
-                                papel.getPelear().setTiempo((papel.getPelear().getTiempo() - 1) * 2);
-                            }
-                            if (((pistola.getPosicion() + 1) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
-                                System.out.println("Pistola se venga de tijera");
-                                tijera.getPelear().setTiempo((tijera.getPelear().getTiempo() - 1) * 2);
-                            }
-                            ////////////////////////
+//                            if (((piedra.getPosicion() + 1) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
+//                                System.out.println("Piedra se venga de papel");
+//                                papel.getPelear().setTiempo((papel.getPelear().getTiempo() - 1) * 2);
+//                            }
+//                            if (((piedra.getPosicion() + 1) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
+//                                System.out.println("Piedra ayuda a tijera");
+//                                tijera.getPelear().setTiempo((tijera.getPelear().getTiempo() - 1) / 2);
+//                            }
+//
+//                            //Papel
+//                            if (((papel.getPosicion() + 1) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
+//                                System.out.println("Papel se venga de tijera");
+//                                tijera.getPelear().setTiempo((tijera.getPelear().getTiempo() - 1) * 2);
+//                            }
+//                            if (((papel.getPosicion() + 1) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
+//                                System.out.println("Papel ayuda a piedra");
+//                                piedra.getPelear().setTiempo((piedra.getPelear().getTiempo() - 1) / 2);
+//                            }
+//
+//                            //Tijera
+//                            if (((tijera.getPosicion() + 1) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
+//                                System.out.println("Tijera se venga de piedra");
+//                                piedra.getPelear().setTiempo((piedra.getPelear().getTiempo() - 1) * 2);
+//                            }
+//                            if (((tijera.getPosicion() + 1) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
+//                                System.out.println("Tijera ayuda a papel");
+//                                papel.getPelear().setTiempo((papel.getPelear().getTiempo() - 1) / 2);
+//                            }
+//
+//                            //Pistola
+//                            if (((pistola.getPosicion() + 1) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
+//                                System.out.println("Pistola se venga de piedra");
+//                                piedra.getPelear().setTiempo((piedra.getPelear().getTiempo() - 1) * 2);
+//                            }
+//                            if (((pistola.getPosicion() + 1) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
+//                                System.out.println("Pistola se venga de papel");
+//                                papel.getPelear().setTiempo((papel.getPelear().getTiempo() - 1) * 2);
+//                            }
+//                            if (((pistola.getPosicion() + 1) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
+//                                System.out.println("Pistola se venga de tijera");
+//                                tijera.getPelear().setTiempo((tijera.getPelear().getTiempo() - 1) * 2);
+//                            }
+//                            ////////////////////////
 
                             System.out.println("-------------");
                             Thread.sleep(1000);

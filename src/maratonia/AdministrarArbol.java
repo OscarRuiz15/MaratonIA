@@ -14,15 +14,16 @@ public class AdministrarArbol {
 
     public int calcularHeuristica(Arbol nodo) {
         int tab[][] = nodo.getNodo();
-        int acumulador = 0;
+        int acumulador = 1;
         Robot robots[] = nodo.getRobots();
         for (int i = 0; i < robots.length; i++) {
             //Calcula la posicion del robot con respecto a la meta
-            acumulador += tab[0].length - robots[i].getPosicion();
+            acumulador *= (tab[0].length - robots[i].getPosicion()+1)/4;
+            
 
         }
-        acumulador /= 4;
 
+        
         return acumulador;
     }
 //Ahora sirve pero toca probarlo bien         
@@ -44,20 +45,19 @@ public class AdministrarArbol {
     public Arbol crearNodo(int id, Arbol padre, int enemigos[], int robotspelea[], int robotsres[], int idrobot) {
         Arbol p = null;
         int ene[] = null;
-        int robotspel[]=null;
-        int restrobots[]=null;
+        int robotspel[] = null;
+        int restrobots[] = null;
         try {
             p = (Arbol) padre.clone();
             ene = enemigos.clone();
-            robotspel=robotspelea.clone();
-            
-            if(robotsres!=null){
-                restrobots=robotsres.clone();
+            robotspel = robotspelea.clone();
+
+            if (robotsres != null) {
+                restrobots = robotsres.clone();
+            } else {
+                restrobots = null;
             }
-            else{
-                restrobots=null;
-            }
-            
+
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(AdministrarArbol.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -66,7 +66,7 @@ public class AdministrarArbol {
             System.out.print(ene[i] + " ");
         }
         System.out.println("");*/
-        int idPadre = p.getPadre(); //Deberia ser getId(?
+        int idPadre = p.getId(); //Deberia ser getId(?
         int tab[][] = new int[4][p.getNodo()[0].length];
         tab[0] = p.getNodo()[0].clone();
         tab[1] = p.getNodo()[1].clone();
@@ -85,12 +85,11 @@ public class AdministrarArbol {
 
             }
 
-          
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(AdministrarArbol.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = 0; i < robotspel.clone().length; i++) {
+        for (int i = 0; i < robotspel.length; i++) {
 
             robots[robotspel.clone()[i]].getMover().setCasillas(2);
             moverRobot(robots[robotspel.clone()[i]], nodo.getNodo());
@@ -104,19 +103,30 @@ public class AdministrarArbol {
         peleaRobot(robots[idrobot], nodo.getNodo());
         if (restrobots != null) {
 
-            if (robots[restrobots.clone()[0]].getPosicion() != robots[restrobots.clone()[0]].getPosicion()) {
+            for (int i = 0; i < restrobots.length; i++) {
 
-                for (int i = 0; i < restrobots.clone().length; i++) {
+                if (restrobots.length <= 1) {
 
-                    if (robots[robotspel.clone()[i]].getPelear().getTiempo() != 0) {
-                        peleaRobot(robots[restrobots.clone()[i]], nodo.getNodo());
+                    if (robots[restrobots[i]].getPelear().getTiempo() != 0) {
+                        peleaRobot(robots[restrobots[i]], nodo.getNodo());
                     } else {
-                        moverRobot(robots[restrobots.clone()[i]], nodo.getNodo());
+                        moverRobot(robots[restrobots[i]], nodo.getNodo());
+                    }
+
+                } else if (robots[restrobots[0]].getPosicion() != robots[restrobots[1]].getPosicion()
+                        && robots[restrobots[1]].getPelear().getTiempo() + robots[restrobots[0]].getPelear().getTiempo() != 0) {
+
+                    if (robots[restrobots[i]].getPelear().getTiempo() != 0) {
+                        peleaRobot(robots[restrobots[i]], nodo.getNodo());
+                    } else {
+                        moverRobot(robots[restrobots[i]], nodo.getNodo());
                     }
 
                 }
+
             }
         }
+
         nodo.setRobots(robots);
 
         int heuristica = calcularHeuristica(nodo);
