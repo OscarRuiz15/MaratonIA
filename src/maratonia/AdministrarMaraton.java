@@ -40,19 +40,19 @@ public class AdministrarMaraton extends UIAplicacion {
 
         Mover mover = new Mover(1, 1);
         Pelear pelear = new Pelear(6, 2, 0, 0, 0);
-        piedra = new Robot(1, 0, mover, pelear);
+        piedra = new Robot(1, 0, mover, pelear, false);
 
         mover = new Mover(1, 1);
         pelear = new Pelear(7, 2, 0, 0, 0);
-        papel = new Robot(2, 0, mover, pelear);
+        papel = new Robot(2, 0, mover, pelear, false);
 
         mover = new Mover(1, 1);
         pelear = new Pelear(5, 2, 0, 0, 0);
-        tijera = new Robot(3, 0, mover, pelear);
+        tijera = new Robot(3, 0, mover, pelear, false);
 
         mover = new Mover(1, 1);
         pelear = new Pelear(8, 2, 0, 0, 0);
-        pistola = new Robot(4, 0, mover, pelear);
+        pistola = new Robot(4, 0, mover, pelear, false);
 
         arbol = new Arbol(0, tablero.clone(), 0, 0, 0, 0, false);
 
@@ -81,10 +81,10 @@ public class AdministrarMaraton extends UIAplicacion {
                     }
                     if (segundos < 10) {
                         lblSegundo.setText("0" + segundos);
-                    }else{
-                        lblSegundo.setText(""+segundos);
+                    } else {
+                        lblSegundo.setText("" + segundos);
                     }
-                    
+
                     //////////////////////////////////////////////////////////////////////////////
                     /////   CONDICIONAL PARA ELEGIR EL NODO CON MENOR COSTO+HEURISTICA       /////
                     /////               Y USARLO COMO RAIZ PARA EXPANDIR DE EL               /////
@@ -109,12 +109,12 @@ public class AdministrarMaraton extends UIAplicacion {
                         pistola = arbol.getRobots()[3];
                     }
                     System.out.println("\nNueva iteracion:\nId Raiz: " + arbol.getPadre() + " Arbol Seleccionado:");
-                    for (int i = 0; i < 4; i++) {
-                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
-                            System.out.print(arbol.getNodo()[i][j] + " ");
-                        }
-                        System.out.println("");
-                    }
+//                    for (int i = 0; i < 4; i++) {
+//                        for (int j = 0; j < arbol.getNodo()[0].length; j++) {
+//                            System.out.print(arbol.getNodo()[i][j] + " ");
+//                        }
+//                        System.out.println("");
+//                    }
                     System.out.println("Total arbol " + arbol.getSuma());
                     System.out.println("Piedra " + piedra.getPelear().getTiempo());
                     System.out.println("Papel " + papel.getPelear().getTiempo());
@@ -566,8 +566,7 @@ public class AdministrarMaraton extends UIAplicacion {
                                         creados.add(nodo1);
 
                                         robotsavanzan[0] = 2;
-                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos
-                                                , robotsavanzan, robotsres, pistola.getId() - 1);
+                                        nodo2 = ada.crearNodo(creados.size(), (Arbol) arbol.clone(), enemigos, robotsavanzan, robotsres, pistola.getId() - 1);
                                         creados.add(nodo2);
                                     } catch (CloneNotSupportedException ex) {
                                         Logger.getLogger(AdministrarMaraton.class.getName()).log(Level.SEVERE, null, ex);
@@ -681,73 +680,127 @@ public class AdministrarMaraton extends UIAplicacion {
                             //ESto lo hacen todos los nodos////////////////////
                             if (piedra.getPelear().getTiempo() != 0) {
                                 peleaRobot(piedra);
-                            } else {
+                                if (((piedra.getPosicion()) == papel.getPosicion()) && piedra.getPelear().getTiempo() == 0){
+                                    papel.setOcupado(false);
+                                }
+                                if (((piedra.getPosicion()) == tijera.getPosicion()) && piedra.getPelear().getTiempo() == 0){
+                                    tijera.setOcupado(false);
+                                }
+                                if (((piedra.getPosicion()) == pistola.getPosicion()) && piedra.getPelear().getTiempo() == 0){
+                                    pistola.setOcupado(false);
+                                }
+                            } else if (!piedra.isOcupado()) {
                                 moverRobot(piedra);
+                                if (((piedra.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
+                                    System.out.println("Piedra se venga de papel");
+                                    piedra.setOcupado(true);
+                                    papel.getPelear().setTiempo((papel.getPelear().getTiempo()) * 2);
+                                    papel.getPelear().setCosto(papel.getPelear().getCosto()*2);
+                                }
+                                if (((piedra.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
+                                    System.out.println("Piedra ayuda a tijera");
+                                    piedra.setOcupado(true);
+                                    tijera.getPelear().setTiempo((tijera.getPelear().getTiempo()) / 2);
+                                    tijera.getPelear().setCosto(papel.getPelear().getCosto()/2);
+                                }
+
                             }
                             if (papel.getPelear().getTiempo() != 0) {
                                 peleaRobot(papel);
-                            } else {
+                                if (((piedra.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() == 0) {
+                                    piedra.setOcupado(false);
+                                }
+                                if (((tijera.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() == 0) {
+                                    tijera.setOcupado(false);
+                                }
+                                if (((pistola.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() == 0) {
+                                    pistola.setOcupado(false);
+                                }
+                                
+                            } else if (!papel.isOcupado()) {
                                 moverRobot(papel);
+                                if (((papel.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
+                                    System.out.println("Papel se venga de tijera");
+                                    papel.setOcupado(true);
+                                    tijera.getPelear().setTiempo((tijera.getPelear().getTiempo()) * 2);
+                                    tijera.getPelear().setCosto((tijera.getPelear().getCosto()) * 2);
+                                }
+                                if (((papel.getPosicion()) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
+                                    System.out.println("Papel ayuda a piedra");
+                                    papel.setOcupado(true);
+                                    piedra.getPelear().setTiempo((piedra.getPelear().getTiempo()) / 2);
+                                    piedra.getPelear().setCosto((piedra.getPelear().getCosto()) / 2);
+                                }
                             }
                             if (tijera.getPelear().getTiempo() != 0) {
                                 peleaRobot(tijera);
-                            } else {
+                                if (((piedra.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() == 0) {
+                                    piedra.setOcupado(false);
+                                }
+                                if (((papel.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() == 0) {
+                                   papel.setOcupado(false);
+                                }
+                                if (((pistola.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() == 0) {
+                                    pistola.setOcupado(false);
+                                }
+                            } else if (!tijera.isOcupado()) {
                                 moverRobot(tijera);
+                                if (((tijera.getPosicion()) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
+                                    System.out.println("Tijera se venga de piedra");
+                                    tijera.setOcupado(true);
+                                    piedra.getPelear().setTiempo((piedra.getPelear().getTiempo()) * 2);
+                                    piedra.getPelear().setCosto((piedra.getPelear().getCosto()) * 2);
+                                }
+                                if (((tijera.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
+                                    System.out.println("Tijera ayuda a papel");
+                                    tijera.setOcupado(true);
+                                    papel.getPelear().setTiempo((papel.getPelear().getTiempo()) / 2);
+                                    papel.getPelear().setCosto((papel.getPelear().getCosto()) / 2);
+                                }
+
                             }
                             if (pistola.getPelear().getTiempo() != 0) {
                                 peleaRobot(pistola);
-                            } else {
+                                if (((piedra.getPosicion()) == pistola.getPosicion()) && pistola.getPelear().getTiempo() == 0) {
+                                    piedra.setOcupado(false);
+                                }
+                                if (((papel.getPosicion()) == pistola.getPosicion()) && pistola.getPelear().getTiempo() == 0) {
+                                   papel.setOcupado(false);
+                                }
+                                if (((tijera.getPosicion()) == pistola.getPosicion()) && pistola.getPelear().getTiempo() == 0) {
+                                    tijera.setOcupado(false);
+                                }
+                            } else if (!pistola.isOcupado()) {
                                 moverRobot(pistola);
+                                if (((pistola.getPosicion()) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
+                                    System.out.println("Pistola se venga de piedra");
+                                    pistola.setOcupado(true);
+                                    piedra.getPelear().setTiempo((piedra.getPelear().getTiempo()) * 2);
+                                    piedra.getPelear().setCosto((piedra.getPelear().getCosto()) * 2);
+                                }
+                                if (((pistola.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
+                                    System.out.println("Pistola se venga de papel");
+                                    pistola.setOcupado(true);
+                                    papel.getPelear().setTiempo((papel.getPelear().getTiempo()) * 2);
+                                    papel.getPelear().setCosto((papel.getPelear().getCosto()) * 2);
+                                }
+                                if (((pistola.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
+                                    System.out.println("Pistola se venga de tijera");
+                                    pistola.setOcupado(true);
+                                    tijera.getPelear().setTiempo((tijera.getPelear().getTiempo()) * 2);
+                                    tijera.getPelear().setCosto((tijera.getPelear().getCosto()) * 2);
+                                }
                             }
                             ///////////////////////////////////////////////////
                             //FIN Condicionales para pelear                  //
-
+                            ///////////////////////////////////////////////////
                             ////Ayuda o venganza
                             //Piedra
-//                            if (((piedra.getPosicion() + 1) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
-//                                System.out.println("Piedra se venga de papel");
-//                                papel.getPelear().setTiempo((papel.getPelear().getTiempo() - 1) * 2);
-//                            }
-//                            if (((piedra.getPosicion() + 1) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
-//                                System.out.println("Piedra ayuda a tijera");
-//                                tijera.getPelear().setTiempo((tijera.getPelear().getTiempo() - 1) / 2);
-//                            }
-//
-//                            //Papel
-//                            if (((papel.getPosicion() + 1) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
-//                                System.out.println("Papel se venga de tijera");
-//                                tijera.getPelear().setTiempo((tijera.getPelear().getTiempo() - 1) * 2);
-//                            }
-//                            if (((papel.getPosicion() + 1) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
-//                                System.out.println("Papel ayuda a piedra");
-//                                piedra.getPelear().setTiempo((piedra.getPelear().getTiempo() - 1) / 2);
-//                            }
-//
-//                            //Tijera
-//                            if (((tijera.getPosicion() + 1) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
-//                                System.out.println("Tijera se venga de piedra");
-//                                piedra.getPelear().setTiempo((piedra.getPelear().getTiempo() - 1) * 2);
-//                            }
-//                            if (((tijera.getPosicion() + 1) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
-//                                System.out.println("Tijera ayuda a papel");
-//                                papel.getPelear().setTiempo((papel.getPelear().getTiempo() - 1) / 2);
-//                            }
-//
-//                            //Pistola
-//                            if (((pistola.getPosicion() + 1) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
-//                                System.out.println("Pistola se venga de piedra");
-//                                piedra.getPelear().setTiempo((piedra.getPelear().getTiempo() - 1) * 2);
-//                            }
-//                            if (((pistola.getPosicion() + 1) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
-//                                System.out.println("Pistola se venga de papel");
-//                                papel.getPelear().setTiempo((papel.getPelear().getTiempo() - 1) * 2);
-//                            }
-//                            if (((pistola.getPosicion() + 1) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
-//                                System.out.println("Pistola se venga de tijera");
-//                                tijera.getPelear().setTiempo((tijera.getPelear().getTiempo() - 1) * 2);
-//                            }
-//                            ////////////////////////
 
+                            //Papel
+                            //Tijera
+                            //Pistola
+                            ////////////////////////
                             System.out.println("-------------");
                             Thread.sleep(1000);
                         }
@@ -780,19 +833,21 @@ public class AdministrarMaraton extends UIAplicacion {
 
         int fuerza = robot.getPelear().getFuerza();
 
-        if (array[posicion] != 0) {
+         if (array[posicion] != 0) {
             if (array[posicion] == fuerza) {
-                array[posicion] = 0;
-                robot.getPelear().setEnemigos(array);
-                robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
-                tablero[posicion][robot.getPosicion() + 1] = 0;
-                robot.getPelear().setPosenemigo(posicion + 1);
+//                array[posicion] = 0;
+//                robot.getPelear().setEnemigos(array);
+//                robot.getPelear()
+//                robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
+//                tablero[posicion][robot.getPosicion() + 1] = 0;
+//                robot.getPelear().setPosenemigo(posicion + 1);
+                robot.getPelear().setCosto(robot.getPelear().getCosto()/2);
                 /////////////////////Cambio/////////////////////////////////////////////////////////    
                 //Cambie esta logica porque solo funciona siempre y cuando todos los enemigos sean iguales
                 //Ahora puse un contador de atributo para contar cuanto le falta al robot para acabar con cada enemigo
-            } else {
+            } 
                 if (robot.getPelear().getTiempoenemigo() == 0) {
-                    robot.getPelear().setTiempoenemigo(2);
+                    robot.getPelear().setTiempoenemigo(robot.getPelear().getCosto());
                 }
 
                 robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
@@ -803,12 +858,10 @@ public class AdministrarMaraton extends UIAplicacion {
                     tablero[posicion][robot.getPosicion() + 1] = 0;
                     robot.getPelear().setPosenemigo(posicion + 1);
                 }
-
-            }
             /////////////////////Fin Cambio/////////////////////////////////////////////////////////    
         }
         if (array[array.length - 1] == 0) {
-            moverRobot(robot);
+
             robot.getPelear().setPosenemigo(0);
         }
 

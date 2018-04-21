@@ -8,6 +8,7 @@ public class Robot implements Cloneable{
     private int posicion;
     private Mover mover;
     private Pelear pelear;
+    private boolean ocupado;
     
     
 
@@ -16,11 +17,12 @@ public class Robot implements Cloneable{
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Robot(int id, int posicion, Mover mover, Pelear pelear) {
+    public Robot(int id, int posicion, Mover mover, Pelear pelear,boolean ocupado) {
         this.id=id;
         this.posicion = posicion;
         this.mover = mover;
         this.pelear = pelear;
+        this.ocupado=ocupado;
         
     }
 
@@ -56,6 +58,14 @@ public class Robot implements Cloneable{
 
     public void setPelear(Pelear pelear) {
         this.pelear = pelear;
+    }
+
+    public boolean isOcupado() {
+        return ocupado;
+    }
+
+    public void setOcupado(boolean ocupado) {
+        this.ocupado = ocupado;
     }
     
     

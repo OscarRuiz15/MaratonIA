@@ -172,17 +172,19 @@ public class AdministrarArbol {
 
         if (array[posicion] != 0) {
             if (array[posicion] == fuerza) {
-                array[posicion] = 0;
-                robot.getPelear().setEnemigos(array);
-                robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
-                tablero[posicion][robot.getPosicion() + 1] = 0;
-                robot.getPelear().setPosenemigo(posicion + 1);
+//                array[posicion] = 0;
+//                robot.getPelear().setEnemigos(array);
+//                robot.getPelear()
+//                robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
+//                tablero[posicion][robot.getPosicion() + 1] = 0;
+//                robot.getPelear().setPosenemigo(posicion + 1);
+                robot.getPelear().setCosto(robot.getPelear().getCosto()/2);
                 /////////////////////Cambio/////////////////////////////////////////////////////////    
                 //Cambie esta logica porque solo funciona siempre y cuando todos los enemigos sean iguales
                 //Ahora puse un contador de atributo para contar cuanto le falta al robot para acabar con cada enemigo
-            } else {
+            } 
                 if (robot.getPelear().getTiempoenemigo() == 0) {
-                    robot.getPelear().setTiempoenemigo(2);
+                    robot.getPelear().setTiempoenemigo(robot.getPelear().getCosto());
                 }
 
                 robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
@@ -194,7 +196,7 @@ public class AdministrarArbol {
                     robot.getPelear().setPosenemigo(posicion + 1);
                 }
 
-            }
+            
             /////////////////////Fin Cambio/////////////////////////////////////////////////////////    
         }
     }
