@@ -8,11 +8,16 @@ public class UIAplicacion extends javax.swing.JFrame {
     public static javax.swing.JButton campos[][];
     ArrayList<String> datos;
     private int tablero[][];
-    public static int tam=0;
+    public static int tam = 0;
 
     public UIAplicacion() {
         initComponents();
         menuSolucionar.setVisible(false);
+        lblHora.setVisible(false);
+        lblMinuto.setVisible(false);
+        lblSegundo.setVisible(false);
+        jLabel1.setVisible(false);
+        jLabel2.setVisible(false);
     }
 
     public void iniciarCampos(int tam) {
@@ -36,6 +41,11 @@ public class UIAplicacion extends javax.swing.JFrame {
     private void initComponents() {
 
         panelCampos = new javax.swing.JPanel();
+        lblHora = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        lblMinuto = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblSegundo = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         menuCargar = new javax.swing.JMenu();
         menuSolucionar = new javax.swing.JMenu();
@@ -56,6 +66,21 @@ public class UIAplicacion extends javax.swing.JFrame {
             panelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
+
+        lblHora.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        lblHora.setText("00");
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel1.setText(":");
+
+        lblMinuto.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        lblMinuto.setText("00");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel2.setText(":");
+
+        lblSegundo.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        lblSegundo.setText("00");
 
         menuCargar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/upload.png"))); // NOI18N
         menuCargar.setText("Cargar Archivo");
@@ -82,9 +107,22 @@ public class UIAplicacion extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelCampos, javax.swing.GroupLayout.DEFAULT_SIZE, 960, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelCampos, javax.swing.GroupLayout.DEFAULT_SIZE, 960, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblHora)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblMinuto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblSegundo)
+                        .addGap(10, 10, 10)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -92,7 +130,14 @@ public class UIAplicacion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblHora)
+                    .addComponent(jLabel1)
+                    .addComponent(lblMinuto)
+                    .addComponent(jLabel2)
+                    .addComponent(lblSegundo))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
 
         pack();
@@ -103,11 +148,16 @@ public class UIAplicacion extends javax.swing.JFrame {
         datos = ca.CargarArchivo();
 
         if (datos.size() > 0) {
-            for (int i = 0; i < datos.size(); i++) {
-                System.out.println(datos.get(i));
-            }
+            /*for (int i = 0; i < datos.size(); i++) {
+             System.out.println(datos.get(i));
+             }*/
 
             menuSolucionar.setVisible(true);
+            lblHora.setVisible(true);
+            lblMinuto.setVisible(true);
+            lblSegundo.setVisible(true);
+            jLabel1.setVisible(true);
+            jLabel2.setVisible(true);
 
             tam = datos.get(0).length();
             int x = 0, y = 1;
@@ -146,10 +196,10 @@ public class UIAplicacion extends javax.swing.JFrame {
 
     private void menuSolucionarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSolucionarMousePressed
         /*Logica l = new Logica(tablero);
-        l.solucionProblema();*/
-        AdministrarMaraton at=new AdministrarMaraton(tablero);
+         l.solucionProblema();*/
+        AdministrarMaraton at = new AdministrarMaraton(tablero, lblHora, lblMinuto, lblSegundo);
         at.animacion();
-        
+
     }//GEN-LAST:event_menuSolucionarMousePressed
     public void mostrarTablero(int tablero[][]) {
         for (int i = 0; i < tablero.length; i++) {
@@ -187,7 +237,13 @@ public class UIAplicacion extends javax.swing.JFrame {
         }
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel lblHora;
+    public javax.swing.JLabel lblMinuto;
+    public static javax.swing.JLabel lblSegundo;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuCargar;
     private javax.swing.JMenu menuSolucionar;
