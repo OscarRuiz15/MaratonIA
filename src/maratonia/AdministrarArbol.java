@@ -18,12 +18,10 @@ public class AdministrarArbol {
         Robot robots[] = nodo.getRobots();
         for (int i = 0; i < robots.length; i++) {
             //Calcula la posicion del robot con respecto a la meta
-            acumulador *= (tab[0].length - robots[i].getPosicion()+1)/4;
-            
+            acumulador *= (tab[0].length - robots[i].getPosicion() + 1) / 4;
 
         }
 
-        
         return acumulador;
     }
 //Ahora sirve pero toca probarlo bien         
@@ -109,8 +107,31 @@ public class AdministrarArbol {
 
                     if (robots[restrobots[i]].getPelear().getTiempo() != 0) {
                         peleaRobot(robots[restrobots[i]], nodo.getNodo());
+                        for (int j = 0; j < robots.length; j++) {
+                            if (j != restrobots[i]) {
+                                if (((robots[restrobots[i]].getPosicion()) == robots[j].getPosicion()) && robots[restrobots[i]].getPelear().getTiempo() == 0) {
+                                    robots[j].setOcupado(false);
+                                }
+                            }
+
+                        }
+
                     } else {
-                        moverRobot(robots[restrobots[i]], nodo.getNodo());
+                        for (int j = 0; j < robots.length; j++) {
+                            if (((robots[restrobots[i]].getPosicion()) == robots[j].getPosicion()) && robots[j].getPelear().getTiempo() != 0
+                                    && !robots[restrobots[i]].isOcupado()) {
+                                System.out.println("Papel ayuda a robots[j]");
+                                robots[restrobots[i]].setOcupado(true);
+                                robots[j].getPelear().setTiempo((robots[j].getPelear().getTiempo()) / 2);
+                                robots[j].getPelear().setCosto((robots[j].getPelear().getCosto()) / 2);
+                                robots[j].getPelear().setTiempoenemigo(robots[j].getPelear().getTiempoenemigo() / 2);
+
+                            }
+                            if (!robots[restrobots[i]].isOcupado()) {
+                                moverRobot(robots[restrobots[i]], nodo.getNodo());
+                            }
+//                            moverRobot(robots[restrobots[i]], nodo.getNodo());
+                        }
                     }
 
                 } else if (robots[restrobots[0]].getPosicion() != robots[restrobots[1]].getPosicion()
@@ -138,19 +159,7 @@ public class AdministrarArbol {
         return nodo;
     }
 
-    public Arbol inicializarNodo(int id, int padre, int tab[][], Robot robots[]) {
-        //nodo.setExpandido(true);
-
-        Arbol nodo = new Arbol(id, tab, padre, 0, 0, 0, false);
-
-        nodo.setRobots(robots);
-        int heuristica = calcularHeuristica(nodo);
-        nodo.setHeuristica(heuristica);
-        int costo = calcularCosto(nodo);
-        nodo.setCosto(costo);
-        nodo.setSuma(costo + heuristica);
-        return nodo;
-    }
+ 
 
     public void moverRobot(Robot robot, int tablero[][]) {
 
@@ -178,18 +187,9 @@ public class AdministrarArbol {
 //                robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
 //                tablero[posicion][robot.getPosicion() + 1] = 0;
 //                robot.getPelear().setPosenemigo(posicion + 1);
-                robot.getPelear().setCosto(1);
-                /////////////////////Cambio/////////////////////////////////////////////////////////    
-                //Cambie esta logica porque solo funciona siempre y cuando todos los enemigos sean iguales
-                //Ahora puse un contador de atributo para contar cuanto le falta al robot para acabar con cada enemigo
-            } else{
-                robot.getPelear().setCosto(2);
-            }
-            //Aca le asigna el tiempo de duracion de pelea por enemigo
                 if (robot.getPelear().getTiempoenemigo() == 0) {
-                    robot.getPelear().setTiempoenemigo(robot.getPelear().getCosto());
+                    robot.getPelear().setTiempoenemigo(robot.getPelear().getCosto() / 2);
                 }
-                //Aca le quita unidades de tiempo total de pelea contra enemigos
                 robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
                 robot.getPelear().setTiempoenemigo(robot.getPelear().getTiempoenemigo() - 1);
                 if (robot.getPelear().getTiempoenemigo() == 0) {
@@ -199,8 +199,29 @@ public class AdministrarArbol {
                     robot.getPelear().setPosenemigo(posicion + 1);
                 }
 
-            
+                /////////////////////Cambio/////////////////////////////////////////////////////////    
+                //Cambie esta logica porque solo funciona siempre y cuando todos los enemigos sean iguales
+                //Ahora puse un contador de atributo para contar cuanto le falta al robot para acabar con cada enemigo
+            } else {
+
+                if (robot.getPelear().getTiempoenemigo() == 0) {
+                    robot.getPelear().setTiempoenemigo(robot.getPelear().getCosto());
+                }
+
+                robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
+                robot.getPelear().setTiempoenemigo(robot.getPelear().getTiempoenemigo() - 1);
+                if (robot.getPelear().getTiempoenemigo() == 0) {
+                    array[posicion] = 0;
+                    robot.getPelear().setEnemigos(array);
+                    tablero[posicion][robot.getPosicion() + 1] = 0;
+                    robot.getPelear().setPosenemigo(posicion + 1);
+                }
+            }
             /////////////////////Fin Cambio/////////////////////////////////////////////////////////    
+        }
+        if (array[array.length - 1] == 0) {
+            robot.getPelear().setPosenemigo(0);
+            robot.getPelear().setCosto(2);
         }
     }
 

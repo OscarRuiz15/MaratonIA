@@ -114,11 +114,11 @@ public class AdministrarMaraton extends UIAplicacion {
                     mostrarTablero();
                     int tamtablero = tablero[0].length - 1;
 
-                    contpiedra.setText(""+piedra.getPelear().getTiempo());
-                    contpapel.setText(""+papel.getPelear().getTiempo());
-                    conttijera.setText(""+tijera.getPelear().getTiempo());
-                    contpistola.setText(""+pistola.getPelear().getTiempo());
-                    
+                    contpiedra.setText("" + piedra.getPelear().getTiempo());
+                    contpapel.setText("" + papel.getPelear().getTiempo());
+                    conttijera.setText("" + tijera.getPelear().getTiempo());
+                    contpistola.setText("" + pistola.getPelear().getTiempo());
+
                     try {
 
                         if (tamtablero - 1 < piedra.getPosicion() || tamtablero - 1 < papel.getPosicion() || tamtablero - 1 < tijera.getPosicion() || tamtablero - 1 < pistola.getPosicion()) {
@@ -128,8 +128,13 @@ public class AdministrarMaraton extends UIAplicacion {
                             ///////////////////////////////////////////////////
                             //Condicionales para decidir entre 4             //
                             ///////////////////////////////////////////////////
+                            int tiempopiedra = piedra.getPelear().getTiempo();
+                            int tiempopapel = papel.getPelear().getTiempo();
+                            int tiempotijera = tijera.getPelear().getTiempo();
+                            int tiempopistola = pistola.getPelear().getTiempo();
                             if (piedra.getPosicion() == papel.getPosicion() && piedra.getPosicion() == tijera.getPosicion()
-                                    && piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                                    && piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0
+                                    && tiempopistola + tiempopapel + tiempopiedra + tiempotijera == 0) {
                                 arbol.setExpandido(true);
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
@@ -171,7 +176,9 @@ public class AdministrarMaraton extends UIAplicacion {
                             //Condicionales para decidir entre 3             //
                             ///////////////////////////////////////////////////
                             //Si se encuentra la piedra, papel y tijera en la misma posicion
-                            else if (piedra.getPosicion() == papel.getPosicion() && piedra.getPosicion() == tijera.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                            else if (piedra.getPosicion() == papel.getPosicion() && piedra.getPosicion() == tijera.getPosicion()
+                                    && tablero[0][piedra.getPosicion() + 1] != 0
+                                    && tiempopapel + tiempopiedra + tiempotijera == 0) {
                                 arbol.setExpandido(true);
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
@@ -202,7 +209,9 @@ public class AdministrarMaraton extends UIAplicacion {
                                 arbol.setHijos(hijos);
                                 decision = true;
                             } //Si se encuentra la piedra, papel y pistola en la misma posicion
-                            else if (piedra.getPosicion() == papel.getPosicion() && piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                            else if (piedra.getPosicion() == papel.getPosicion() && piedra.getPosicion() == pistola.getPosicion()
+                                    && tablero[0][piedra.getPosicion() + 1] != 0
+                                    && tiempopistola + tiempopapel + tiempopiedra == 0) {
                                 arbol.setExpandido(true);
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
@@ -233,7 +242,9 @@ public class AdministrarMaraton extends UIAplicacion {
                                 arbol.setHijos(hijos);
                                 decision = true;
                             } //Si se encuentra la piedra, tijera y pistola en la misma posicion
-                            else if (piedra.getPosicion() == tijera.getPosicion() && piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                            else if (piedra.getPosicion() == tijera.getPosicion() && piedra.getPosicion() == pistola.getPosicion()
+                                    && tablero[0][piedra.getPosicion() + 1] != 0
+                                    && tiempopistola + tiempopiedra + tiempotijera == 0) {
                                 arbol.setExpandido(true);
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
@@ -264,7 +275,9 @@ public class AdministrarMaraton extends UIAplicacion {
                                 arbol.setHijos(hijos);
                                 decision = true;
                             } //Si se encuentra el papel, tijera y pistola en la misma posicion
-                            else if (papel.getPosicion() == tijera.getPosicion() && papel.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                            else if (papel.getPosicion() == tijera.getPosicion() && papel.getPosicion() == pistola.getPosicion()
+                                    && tablero[0][papel.getPosicion() + 1] != 0
+                                    && tiempopistola + tiempopapel + tiempotijera == 0) {
                                 arbol.setExpandido(true);
                                 int enemigos[] = new int[4];
                                 for (int i = 0; i < enemigos.length; i++) {
@@ -305,7 +318,8 @@ public class AdministrarMaraton extends UIAplicacion {
                             ///////////////////////////////////////////////////
                             if (!decision) {
                                 //Si se encuentra la piedra y el papel en la misma posicion
-                                if (piedra.getPosicion() == papel.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                                if (piedra.getPosicion() == papel.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0
+                                        && tiempopapel + tiempopiedra == 0) {
                                     arbol.setExpandido(true);
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
@@ -334,7 +348,8 @@ public class AdministrarMaraton extends UIAplicacion {
                                     decision = true;
                                 }
                                 //Si se encuentra la piedra y la tijera en la misma posicion
-                                if (piedra.getPosicion() == tijera.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                                if (piedra.getPosicion() == tijera.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0
+                                        && tiempopiedra + tiempotijera == 0) {
                                     arbol.setExpandido(true);
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
@@ -363,7 +378,8 @@ public class AdministrarMaraton extends UIAplicacion {
                                     decision = true;
                                 }
                                 //Si se encuentra la piedra y pistola en la misma posicion
-                                if (piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0) {
+                                if (piedra.getPosicion() == pistola.getPosicion() && tablero[0][piedra.getPosicion() + 1] != 0
+                                        && tiempopistola + tiempopiedra == 0) {
                                     arbol.setExpandido(true);
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
@@ -392,7 +408,8 @@ public class AdministrarMaraton extends UIAplicacion {
                                     decision = true;
                                 }
                                 //Si se encuentra el papel y la tijera en la misma posicion
-                                if (papel.getPosicion() == tijera.getPosicion() && tablero[0][papel.getPosicion() + 1] != 0) {
+                                if (papel.getPosicion() == tijera.getPosicion() && tablero[0][papel.getPosicion() + 1] != 0
+                                        && tiempopapel + tiempotijera == 0) {
                                     arbol.setExpandido(true);
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
@@ -421,7 +438,8 @@ public class AdministrarMaraton extends UIAplicacion {
                                     decision = true;
                                 }
                                 //Si se encuentra el papel y la pistola en la misma posicion
-                                if (papel.getPosicion() == pistola.getPosicion() && tablero[0][papel.getPosicion() + 1] != 0) {
+                                if (papel.getPosicion() == pistola.getPosicion() && tablero[0][papel.getPosicion() + 1] != 0
+                                        && tiempopistola + tiempopapel == 0) {
                                     arbol.setExpandido(true);
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
@@ -450,7 +468,8 @@ public class AdministrarMaraton extends UIAplicacion {
                                     decision = true;
                                 }
                                 //Si se encuentra la tijera y la pistola en la misma posicion
-                                if (tijera.getPosicion() == pistola.getPosicion() && tablero[0][pistola.getPosicion() + 1] != 0) {
+                                if (tijera.getPosicion() == pistola.getPosicion() && tablero[0][pistola.getPosicion() + 1] != 0
+                                        && tiempopistola + tiempotijera == 0) {
                                     arbol.setExpandido(true);
                                     int enemigos[] = new int[4];
                                     for (int i = 0; i < enemigos.length; i++) {
@@ -496,7 +515,7 @@ public class AdministrarMaraton extends UIAplicacion {
                                     //Si en la posicion siguiente a donde esta parada la piedra es un enemigo (mayor a 4)
                                     //entonces el elegido es la piedra
                                     if (tablero[0][piedra.getPosicion() + 1] > 4 && piedra.getPelear().getTiempo() == 0) {
-                                        arbol.setExpandido(true);
+                                        
                                         int enemigos[] = new int[4];
                                         for (int i = 0; i < enemigos.length; i++) {
                                             enemigos[i] = tablero[i][piedra.getPosicion() + 1];
@@ -512,7 +531,7 @@ public class AdministrarMaraton extends UIAplicacion {
                                     //Si en la posicion siguiente a donde esta parada el papel es un enemigo (mayor a 4)
                                     //entonces el elegido es el papel
                                     if (tablero[0][papel.getPosicion() + 1] > 4 && papel.getPelear().getTiempo() == 0) {
-                                        arbol.setExpandido(true);
+                                       
                                         int enemigos[] = new int[4];
                                         for (int i = 0; i < enemigos.length; i++) {
                                             enemigos[i] = tablero[i][papel.getPosicion() + 1];
@@ -528,7 +547,7 @@ public class AdministrarMaraton extends UIAplicacion {
                                     //Si en la posicion siguiente a donde esta parada la tijera es un enemigo (mayor a 4)
                                     //entonces el elegido es la tijera
                                     if (tablero[0][tijera.getPosicion() + 1] > 4 && tijera.getPelear().getTiempo() == 0) {
-                                        arbol.setExpandido(true);
+                                        
                                         int enemigos[] = new int[4];
                                         for (int i = 0; i < enemigos.length; i++) {
                                             enemigos[i] = tablero[i][tijera.getPosicion() + 1];
@@ -543,7 +562,7 @@ public class AdministrarMaraton extends UIAplicacion {
                                     //Si en la posicion siguiente a donde esta parada la pistola es un enemigo (mayor a 4)
                                     //entonces el elegido es la pistola
                                     if (tablero[0][pistola.getPosicion() + 1] > 4 && pistola.getPelear().getTiempo() == 0) {
-                                        arbol.setExpandido(true);
+                                       
                                         int enemigos[] = new int[4];
                                         for (int i = 0; i < enemigos.length; i++) {
                                             enemigos[i] = tablero[i][pistola.getPosicion() + 1];
@@ -574,7 +593,29 @@ public class AdministrarMaraton extends UIAplicacion {
                             ///////////////////////////////////////////////////
                             //ESto lo hacen todos los nodos////////////////////
                             if (!decision) {
-                                if (piedra.getPelear().getTiempo() != 0) {
+                                if (piedra.getPelear().getTiempo() == 0) {
+                                    if (((piedra.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0
+                                            && !piedra.isOcupado()) {
+                                        System.out.println("Piedra se venga de papel");
+                                        piedra.setOcupado(true);
+                                        papel.getPelear().setTiempo((papel.getPelear().getTiempo()) * 2);
+                                        papel.getPelear().setCosto(papel.getPelear().getCosto() * 2);
+                                        papel.getPelear().setTiempoenemigo(papel.getPelear().getTiempoenemigo() * 2);
+                                    }
+                                    if (((piedra.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0
+                                            && !piedra.isOcupado()) {
+                                        System.out.println("Piedra ayuda a tijera");
+                                        piedra.setOcupado(true);
+                                        tijera.getPelear().setTiempo((tijera.getPelear().getTiempo()) / 2);
+                                        tijera.getPelear().setCosto(tijera.getPelear().getCosto() / 2);
+                                        tijera.getPelear().setTiempoenemigo(tijera.getPelear().getTiempoenemigo() / 2);
+                                    }
+                                    if (!piedra.isOcupado()) {
+
+                                        moverRobot(piedra);
+                                    }
+                                } else {
+
                                     peleaRobot(piedra);
                                     if (((piedra.getPosicion()) == papel.getPosicion()) && piedra.getPelear().getTiempo() == 0) {
                                         papel.setOcupado(false);
@@ -585,25 +626,31 @@ public class AdministrarMaraton extends UIAplicacion {
                                     if (((piedra.getPosicion()) == pistola.getPosicion()) && piedra.getPelear().getTiempo() == 0) {
                                         pistola.setOcupado(false);
                                     }
-                                } else  {
-                                    if (((piedra.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
-                                        System.out.println("Piedra se venga de papel");
-                                        piedra.setOcupado(true);
-                                        papel.getPelear().setTiempo((papel.getPelear().getTiempo()) * 2);
-                                        papel.getPelear().setCosto(papel.getPelear().getCosto() * 2);
-                                    }
-                                    if (((piedra.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
-                                        System.out.println("Piedra ayuda a tijera");
-                                        piedra.setOcupado(true);
-                                        tijera.getPelear().setTiempo((tijera.getPelear().getTiempo()) / 2);
-                                        tijera.getPelear().setCosto(papel.getPelear().getCosto() / 2);
-                                    }
-                                    if (!piedra.isOcupado()){
-
-                                    moverRobot(piedra);
-                                    }
                                 }
-                                if (papel.getPelear().getTiempo() != 0) {
+                                if (papel.getPelear().getTiempo() == 0) {
+                                    if (((papel.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0
+                                            && !papel.isOcupado()) {
+                                        System.out.println("Papel se venga de tijera");
+                                        papel.setOcupado(true);
+                                        tijera.getPelear().setTiempo((tijera.getPelear().getTiempo()) * 2);
+                                        tijera.getPelear().setCosto((tijera.getPelear().getCosto()) * 2);
+                                        tijera.getPelear().setTiempoenemigo(tijera.getPelear().getTiempoenemigo() * 2);
+                                    }
+                                    if (((papel.getPosicion()) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0
+                                            && !papel.isOcupado()) {
+                                        System.out.println("Papel ayuda a piedra");
+                                        papel.setOcupado(true);
+                                        piedra.getPelear().setTiempo((piedra.getPelear().getTiempo()) / 2);
+                                        piedra.getPelear().setCosto((piedra.getPelear().getCosto()) / 2);
+                                        piedra.getPelear().setTiempoenemigo(piedra.getPelear().getTiempoenemigo() / 2);
+
+                                    }
+                                    if (!papel.isOcupado()) {
+                                        moverRobot(papel);
+                                    }
+
+                                } else {
+
                                     peleaRobot(papel);
                                     if (((piedra.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() == 0) {
                                         piedra.setOcupado(false);
@@ -614,25 +661,29 @@ public class AdministrarMaraton extends UIAplicacion {
                                     if (((pistola.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() == 0) {
                                         pistola.setOcupado(false);
                                     }
-
-                                } else  {
-                                    if (((papel.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
-                                        System.out.println("Papel se venga de tijera");
-                                        papel.setOcupado(true);
-                                        tijera.getPelear().setTiempo((tijera.getPelear().getTiempo()) * 2);
-                                        tijera.getPelear().setCosto((tijera.getPelear().getCosto()) * 2);
-                                    }
-                                    if (((papel.getPosicion()) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
-                                        System.out.println("Papel ayuda a piedra");
-                                        papel.setOcupado(true);
-                                        piedra.getPelear().setTiempo((piedra.getPelear().getTiempo()) / 2);
-                                        piedra.getPelear().setCosto((piedra.getPelear().getCosto()) / 2);
-                                    }
-                                    if (!papel.isOcupado()){
-                                    moverRobot(papel);
-                                    }
                                 }
-                                if (tijera.getPelear().getTiempo() != 0) {
+                                if (tijera.getPelear().getTiempo() == 0) {
+                                    if (((tijera.getPosicion()) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0
+                                            && !tijera.isOcupado()) {
+                                        System.out.println("Tijera se venga de piedra");
+                                        tijera.setOcupado(true);
+                                        piedra.getPelear().setTiempo((piedra.getPelear().getTiempo()) * 2);
+                                        piedra.getPelear().setCosto((piedra.getPelear().getCosto()) * 2);
+                                        piedra.getPelear().setTiempoenemigo(piedra.getPelear().getTiempoenemigo() * 2);
+                                    }
+                                    if (((tijera.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0
+                                            && !tijera.isOcupado()) {
+                                        System.out.println("Tijera ayuda a papel");
+                                        tijera.setOcupado(true);
+                                        papel.getPelear().setTiempo((papel.getPelear().getTiempo()) / 2);
+                                        papel.getPelear().setCosto((papel.getPelear().getCosto()) / 2);
+                                        papel.getPelear().setTiempoenemigo(papel.getPelear().getTiempoenemigo() / 2);
+                                    }
+                                    if (!tijera.isOcupado()) {
+                                        moverRobot(tijera);
+                                    }
+                                } else {
+
                                     peleaRobot(tijera);
                                     if (((piedra.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() == 0) {
                                         piedra.setOcupado(false);
@@ -643,25 +694,38 @@ public class AdministrarMaraton extends UIAplicacion {
                                     if (((pistola.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() == 0) {
                                         pistola.setOcupado(false);
                                     }
-                                } else  {
-                                    if (((tijera.getPosicion()) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
-                                        System.out.println("Tijera se venga de piedra");
-                                        tijera.setOcupado(true);
+
+                                }
+                                if (pistola.getPelear().getTiempo() == 0) {
+                                    if (((pistola.getPosicion()) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0
+                                            && !pistola.isOcupado()) {
+                                        System.out.println("Pistola se venga de piedra");
+                                        pistola.setOcupado(true);
                                         piedra.getPelear().setTiempo((piedra.getPelear().getTiempo()) * 2);
                                         piedra.getPelear().setCosto((piedra.getPelear().getCosto()) * 2);
+                                        piedra.getPelear().setTiempoenemigo(piedra.getPelear().getTiempoenemigo() * 2);
                                     }
-                                    if (((tijera.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
-                                        System.out.println("Tijera ayuda a papel");
-                                        tijera.setOcupado(true);
-                                        papel.getPelear().setTiempo((papel.getPelear().getTiempo()) / 2);
-                                        papel.getPelear().setCosto((papel.getPelear().getCosto()) / 2);
+                                    if (((pistola.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0
+                                            && !pistola.isOcupado()) {
+                                        System.out.println("Pistola se venga de papel");
+                                        pistola.setOcupado(true);
+                                        papel.getPelear().setTiempo((papel.getPelear().getTiempo()) * 2);
+                                        papel.getPelear().setCosto((papel.getPelear().getCosto()) * 2);
+                                        papel.getPelear().setTiempoenemigo(papel.getPelear().getTiempoenemigo() * 2);
                                     }
-                                    if (!tijera.isOcupado()){
-                                    moverRobot(tijera);
+                                    if (!pistola.isOcupado()) {
+                                        moverRobot(pistola);
                                     }
+                                    if (((pistola.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0
+                                            && !pistola.isOcupado()) {
+                                        System.out.println("Pistola se venga de tijera");
+                                        pistola.setOcupado(true);
+                                        tijera.getPelear().setTiempo((tijera.getPelear().getTiempo()) * 2);
+                                        tijera.getPelear().setCosto((tijera.getPelear().getCosto()) * 2);
+                                        tijera.getPelear().setTiempoenemigo(tijera.getPelear().getTiempoenemigo() * 2);
+                                    }
+                                } else {
                                     
-                                }
-                                if (pistola.getPelear().getTiempo() != 0) {
                                     peleaRobot(pistola);
                                     if (((piedra.getPosicion()) == pistola.getPosicion()) && pistola.getPelear().getTiempo() == 0) {
                                         piedra.setOcupado(false);
@@ -671,28 +735,6 @@ public class AdministrarMaraton extends UIAplicacion {
                                     }
                                     if (((tijera.getPosicion()) == pistola.getPosicion()) && pistola.getPelear().getTiempo() == 0) {
                                         tijera.setOcupado(false);
-                                    }
-                                } else  {
-                                    if (((pistola.getPosicion()) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
-                                        System.out.println("Pistola se venga de piedra");
-                                        pistola.setOcupado(true);
-                                        piedra.getPelear().setTiempo((piedra.getPelear().getTiempo()) * 2);
-                                        piedra.getPelear().setCosto((piedra.getPelear().getCosto()) * 2);
-                                    }
-                                    if (((pistola.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
-                                        System.out.println("Pistola se venga de papel");
-                                        pistola.setOcupado(true);
-                                        papel.getPelear().setTiempo((papel.getPelear().getTiempo()) * 2);
-                                        papel.getPelear().setCosto((papel.getPelear().getCosto()) * 2);
-                                    }
-                                    if (!pistola.isOcupado()){
-                                    moverRobot(pistola);
-                                    }
-                                    if (((pistola.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
-                                        System.out.println("Pistola se venga de tijera");
-                                        pistola.setOcupado(true);
-                                        tijera.getPelear().setTiempo((tijera.getPelear().getTiempo()) * 2);
-                                        tijera.getPelear().setCosto((tijera.getPelear().getCosto()) * 2);
                                     }
                                 }
                             }
@@ -739,29 +781,41 @@ public class AdministrarMaraton extends UIAplicacion {
 //                robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
 //                tablero[posicion][robot.getPosicion() + 1] = 0;
 //                robot.getPelear().setPosenemigo(posicion + 1);
-                robot.getPelear().setCosto(1);
+                if (robot.getPelear().getTiempoenemigo() == 0) {
+                    robot.getPelear().setTiempoenemigo(robot.getPelear().getCosto() / 2);
+                }
+                robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
+                robot.getPelear().setTiempoenemigo(robot.getPelear().getTiempoenemigo() - 1);
+                if (robot.getPelear().getTiempoenemigo() == 0) {
+                    array[posicion] = 0;
+                    robot.getPelear().setEnemigos(array);
+                    tablero[posicion][robot.getPosicion() + 1] = 0;
+                    robot.getPelear().setPosenemigo(posicion + 1);
+                }
+
                 /////////////////////Cambio/////////////////////////////////////////////////////////    
                 //Cambie esta logica porque solo funciona siempre y cuando todos los enemigos sean iguales
                 //Ahora puse un contador de atributo para contar cuanto le falta al robot para acabar con cada enemigo
             } else {
-                robot.getPelear().setCosto(2);
-            }
-            if (robot.getPelear().getTiempoenemigo() == 0) {
-                robot.getPelear().setTiempoenemigo(robot.getPelear().getCosto());
-            }
 
-            robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
-            robot.getPelear().setTiempoenemigo(robot.getPelear().getTiempoenemigo() - 1);
-            if (robot.getPelear().getTiempoenemigo() == 0) {
-                array[posicion] = 0;
-                robot.getPelear().setEnemigos(array);
-                tablero[posicion][robot.getPosicion() + 1] = 0;
-                robot.getPelear().setPosenemigo(posicion + 1);
+                if (robot.getPelear().getTiempoenemigo() == 0) {
+                    robot.getPelear().setTiempoenemigo(robot.getPelear().getCosto());
+                }
+
+                robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
+                robot.getPelear().setTiempoenemigo(robot.getPelear().getTiempoenemigo() - 1);
+                if (robot.getPelear().getTiempoenemigo() == 0) {
+                    array[posicion] = 0;
+                    robot.getPelear().setEnemigos(array);
+                    tablero[posicion][robot.getPosicion() + 1] = 0;
+                    robot.getPelear().setPosenemigo(posicion + 1);
+                }
             }
             /////////////////////Fin Cambio/////////////////////////////////////////////////////////    
         }
         if (array[array.length - 1] == 0) {
             robot.getPelear().setPosenemigo(0);
+            robot.getPelear().setCosto(2);
         }
 
     }
@@ -790,51 +844,7 @@ public class AdministrarMaraton extends UIAplicacion {
 
     }
 
-    public void moverRobot(Robot robot, int tablero[][]) {
-        int mov = robot.getMover().moverA(robot.getPosicion());
-
-        tablero[robot.getId() - 1][mov] = robot.getId();
-        tablero[robot.getId() - 1][robot.getPosicion()] = 0;
-        robot.setPosicion(mov);
-        robot.getMover().setCasillas(1);
-
-    }
-
-    public void peleaRobot(Robot robot, int tablero[][]) {
-        int largo = robot.getPelear().getEnemigos().length;
-        int posicion = robot.getPelear().getPosenemigo();
-        int array[] = robot.getPelear().getEnemigos();
-
-        int fuerza = robot.getPelear().getFuerza();
-
-        if (array[posicion] != 0) {
-            if (array[posicion] == fuerza) {
-                array[posicion] = 0;
-                robot.getPelear().setEnemigos(array);
-                robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
-                tablero[posicion][robot.getPosicion() + 1] = 0;
-                robot.getPelear().setPosenemigo(posicion + 1);
-                /////////////////////Cambio/////////////////////////////////////////////////////////    
-                //Cambie esta logica porque solo funciona siempre y cuando todos los enemigos sean iguales
-                //Ahora puse un contador de atributo para contar cuanto le falta al robot para acabar con cada enemigo
-            } else {
-                if (robot.getPelear().getTiempoenemigo() == 0) {
-                    robot.getPelear().setTiempoenemigo(2);
-                }
-
-                robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
-                robot.getPelear().setTiempoenemigo(robot.getPelear().getTiempoenemigo() - 1);
-                if (robot.getPelear().getTiempoenemigo() == 0) {
-                    array[posicion] = 0;
-                    robot.getPelear().setEnemigos(array);
-                    tablero[posicion][robot.getPosicion() + 1] = 0;
-                    robot.getPelear().setPosenemigo(posicion + 1);
-                }
-
-            }
-            /////////////////////Fin Cambio/////////////////////////////////////////////////////////    
-        }
-    }
+ 
 
     public void mostrarTablero() {
         for (int i = 0; i < tablero.length; i++) {

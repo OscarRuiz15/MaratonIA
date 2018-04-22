@@ -290,7 +290,7 @@ public class UIAplicacion extends javax.swing.JFrame {
     private void menuSolucionarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSolucionarMousePressed
         /*Logica l = new Logica(tablero);
          l.solucionProblema();*/
-        AdministrarMaraton at = new AdministrarMaraton(tablero, lblHora, lblMinuto, lblSegundo, lblContPapel, lblContPiedra, lblContTijera, lblContPistola);
+        AdministrarMaraton at = new AdministrarMaraton(tablero, lblHora, lblMinuto, lblSegundo, lblContPiedra, lblContPapel, lblContTijera, lblContPistola);
         at.animacion();
 
     }//GEN-LAST:event_menuSolucionarMousePressed
