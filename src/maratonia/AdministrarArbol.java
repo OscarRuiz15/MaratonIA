@@ -134,7 +134,7 @@ public class AdministrarArbol {
         int costo = calcularCosto(nodo);
         nodo.setCosto(costo);
         nodo.setSuma(costo + heuristica);
-        verNodos(nodo);
+        //verNodos(nodo);
         return nodo;
     }
 
@@ -178,15 +178,18 @@ public class AdministrarArbol {
 //                robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
 //                tablero[posicion][robot.getPosicion() + 1] = 0;
 //                robot.getPelear().setPosenemigo(posicion + 1);
-                robot.getPelear().setCosto(robot.getPelear().getCosto()/2);
+                robot.getPelear().setCosto(1);
                 /////////////////////Cambio/////////////////////////////////////////////////////////    
                 //Cambie esta logica porque solo funciona siempre y cuando todos los enemigos sean iguales
                 //Ahora puse un contador de atributo para contar cuanto le falta al robot para acabar con cada enemigo
-            } 
+            } else{
+                robot.getPelear().setCosto(2);
+            }
+            //Aca le asigna el tiempo de duracion de pelea por enemigo
                 if (robot.getPelear().getTiempoenemigo() == 0) {
                     robot.getPelear().setTiempoenemigo(robot.getPelear().getCosto());
                 }
-
+                //Aca le quita unidades de tiempo total de pelea contra enemigos
                 robot.getPelear().setTiempo(robot.getPelear().getTiempo() - 1);
                 robot.getPelear().setTiempoenemigo(robot.getPelear().getTiempoenemigo() - 1);
                 if (robot.getPelear().getTiempoenemigo() == 0) {

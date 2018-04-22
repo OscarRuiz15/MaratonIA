@@ -18,6 +18,14 @@ public class UIAplicacion extends javax.swing.JFrame {
         lblSegundo.setVisible(false);
         jLabel1.setVisible(false);
         jLabel2.setVisible(false);
+        lblContPapel.setVisible(false);
+        lblContPiedra.setVisible(false);
+        lblContTijera.setVisible(false);
+        lblContPistola.setVisible(false);
+        lblPiedra.setVisible(false);
+        lblPapel.setVisible(false);
+        lblTijera.setVisible(false);
+        lblPistola.setVisible(false);
     }
 
     public void iniciarCampos(int tam) {
@@ -46,6 +54,14 @@ public class UIAplicacion extends javax.swing.JFrame {
         lblMinuto = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lblSegundo = new javax.swing.JLabel();
+        lblPiedra = new javax.swing.JLabel();
+        lblPapel = new javax.swing.JLabel();
+        lblTijera = new javax.swing.JLabel();
+        lblPistola = new javax.swing.JLabel();
+        lblContPiedra = new javax.swing.JLabel();
+        lblContPapel = new javax.swing.JLabel();
+        lblContTijera = new javax.swing.JLabel();
+        lblContPistola = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         menuCargar = new javax.swing.JMenu();
         menuSolucionar = new javax.swing.JMenu();
@@ -82,6 +98,37 @@ public class UIAplicacion extends javax.swing.JFrame {
         lblSegundo.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblSegundo.setText("00");
 
+        lblPiedra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/piedra.png"))); // NOI18N
+
+        lblPapel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/papel.png"))); // NOI18N
+
+        lblTijera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tijera.png"))); // NOI18N
+
+        lblPistola.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pistola.png"))); // NOI18N
+
+        lblContPiedra.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        lblContPiedra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblContPiedra.setText("0");
+        lblContPiedra.setMaximumSize(new java.awt.Dimension(64, 64));
+        lblContPiedra.setMinimumSize(new java.awt.Dimension(64, 64));
+        lblContPiedra.setPreferredSize(new java.awt.Dimension(64, 64));
+        lblContPiedra.setVerifyInputWhenFocusTarget(false);
+
+        lblContPapel.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        lblContPapel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblContPapel.setText("0");
+        lblContPapel.setPreferredSize(new java.awt.Dimension(64, 64));
+
+        lblContTijera.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        lblContTijera.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblContTijera.setText("0");
+        lblContTijera.setPreferredSize(new java.awt.Dimension(64, 64));
+
+        lblContPistola.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        lblContPistola.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblContPistola.setText("0");
+        lblContPistola.setPreferredSize(new java.awt.Dimension(64, 64));
+
         menuCargar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/upload.png"))); // NOI18N
         menuCargar.setText("Cargar Archivo");
         menuCargar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -108,11 +155,30 @@ public class UIAplicacion extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelCampos, javax.swing.GroupLayout.DEFAULT_SIZE, 960, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panelCampos, javax.swing.GroupLayout.DEFAULT_SIZE, 960, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblPistola)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblContPistola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblTijera)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblContTijera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblPapel)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblContPapel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblPiedra)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblContPiedra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblHora)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)
@@ -130,14 +196,33 @@ public class UIAplicacion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblHora)
-                    .addComponent(jLabel1)
-                    .addComponent(lblMinuto)
-                    .addComponent(jLabel2)
-                    .addComponent(lblSegundo))
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblHora)
+                            .addComponent(jLabel1)
+                            .addComponent(lblMinuto)
+                            .addComponent(jLabel2)
+                            .addComponent(lblSegundo)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPiedra)
+                            .addComponent(lblContPiedra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPapel)
+                            .addComponent(lblContPapel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTijera)
+                            .addComponent(lblContTijera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPistola)
+                            .addComponent(lblContPistola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();
@@ -158,6 +243,14 @@ public class UIAplicacion extends javax.swing.JFrame {
             lblSegundo.setVisible(true);
             jLabel1.setVisible(true);
             jLabel2.setVisible(true);
+            lblContPapel.setVisible(true);
+            lblContPiedra.setVisible(true);
+            lblContTijera.setVisible(true);
+            lblContPistola.setVisible(true);
+            lblPiedra.setVisible(true);
+            lblPapel.setVisible(true);
+            lblTijera.setVisible(true);
+            lblPistola.setVisible(true);
 
             tam = datos.get(0).length();
             int x = 0, y = 1;
@@ -197,7 +290,7 @@ public class UIAplicacion extends javax.swing.JFrame {
     private void menuSolucionarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSolucionarMousePressed
         /*Logica l = new Logica(tablero);
          l.solucionProblema();*/
-        AdministrarMaraton at = new AdministrarMaraton(tablero, lblHora, lblMinuto, lblSegundo);
+        AdministrarMaraton at = new AdministrarMaraton(tablero, lblHora, lblMinuto, lblSegundo, lblContPapel, lblContPiedra, lblContTijera, lblContPistola);
         at.animacion();
 
     }//GEN-LAST:event_menuSolucionarMousePressed
@@ -241,9 +334,17 @@ public class UIAplicacion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    public static javax.swing.JLabel lblContPapel;
+    public static javax.swing.JLabel lblContPiedra;
+    public static javax.swing.JLabel lblContPistola;
+    public static javax.swing.JLabel lblContTijera;
     public javax.swing.JLabel lblHora;
     public javax.swing.JLabel lblMinuto;
+    private javax.swing.JLabel lblPapel;
+    private javax.swing.JLabel lblPiedra;
+    private javax.swing.JLabel lblPistola;
     public static javax.swing.JLabel lblSegundo;
+    private javax.swing.JLabel lblTijera;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuCargar;
     private javax.swing.JMenu menuSolucionar;
