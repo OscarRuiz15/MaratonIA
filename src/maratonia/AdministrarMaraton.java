@@ -585,8 +585,7 @@ public class AdministrarMaraton extends UIAplicacion {
                                     if (((piedra.getPosicion()) == pistola.getPosicion()) && piedra.getPelear().getTiempo() == 0) {
                                         pistola.setOcupado(false);
                                     }
-                                } else if (!piedra.isOcupado()) {
-                                    moverRobot(piedra);
+                                } else  {
                                     if (((piedra.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0) {
                                         System.out.println("Piedra se venga de papel");
                                         piedra.setOcupado(true);
@@ -599,7 +598,10 @@ public class AdministrarMaraton extends UIAplicacion {
                                         tijera.getPelear().setTiempo((tijera.getPelear().getTiempo()) / 2);
                                         tijera.getPelear().setCosto(papel.getPelear().getCosto() / 2);
                                     }
+                                    if (!piedra.isOcupado()){
 
+                                    moverRobot(piedra);
+                                    }
                                 }
                                 if (papel.getPelear().getTiempo() != 0) {
                                     peleaRobot(papel);
@@ -613,8 +615,7 @@ public class AdministrarMaraton extends UIAplicacion {
                                         pistola.setOcupado(false);
                                     }
 
-                                } else if (!papel.isOcupado()) {
-                                    moverRobot(papel);
+                                } else  {
                                     if (((papel.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
                                         System.out.println("Papel se venga de tijera");
                                         papel.setOcupado(true);
@@ -626,6 +627,9 @@ public class AdministrarMaraton extends UIAplicacion {
                                         papel.setOcupado(true);
                                         piedra.getPelear().setTiempo((piedra.getPelear().getTiempo()) / 2);
                                         piedra.getPelear().setCosto((piedra.getPelear().getCosto()) / 2);
+                                    }
+                                    if (!papel.isOcupado()){
+                                    moverRobot(papel);
                                     }
                                 }
                                 if (tijera.getPelear().getTiempo() != 0) {
@@ -639,8 +643,7 @@ public class AdministrarMaraton extends UIAplicacion {
                                     if (((pistola.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() == 0) {
                                         pistola.setOcupado(false);
                                     }
-                                } else if (!tijera.isOcupado()) {
-                                    moverRobot(tijera);
+                                } else  {
                                     if (((tijera.getPosicion()) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
                                         System.out.println("Tijera se venga de piedra");
                                         tijera.setOcupado(true);
@@ -653,7 +656,10 @@ public class AdministrarMaraton extends UIAplicacion {
                                         papel.getPelear().setTiempo((papel.getPelear().getTiempo()) / 2);
                                         papel.getPelear().setCosto((papel.getPelear().getCosto()) / 2);
                                     }
-
+                                    if (!tijera.isOcupado()){
+                                    moverRobot(tijera);
+                                    }
+                                    
                                 }
                                 if (pistola.getPelear().getTiempo() != 0) {
                                     peleaRobot(pistola);
@@ -666,8 +672,7 @@ public class AdministrarMaraton extends UIAplicacion {
                                     if (((tijera.getPosicion()) == pistola.getPosicion()) && pistola.getPelear().getTiempo() == 0) {
                                         tijera.setOcupado(false);
                                     }
-                                } else if (!pistola.isOcupado()) {
-                                    moverRobot(pistola);
+                                } else  {
                                     if (((pistola.getPosicion()) == piedra.getPosicion()) && piedra.getPelear().getTiempo() != 0) {
                                         System.out.println("Pistola se venga de piedra");
                                         pistola.setOcupado(true);
@@ -679,6 +684,9 @@ public class AdministrarMaraton extends UIAplicacion {
                                         pistola.setOcupado(true);
                                         papel.getPelear().setTiempo((papel.getPelear().getTiempo()) * 2);
                                         papel.getPelear().setCosto((papel.getPelear().getCosto()) * 2);
+                                    }
+                                    if (!pistola.isOcupado()){
+                                    moverRobot(pistola);
                                     }
                                     if (((pistola.getPosicion()) == tijera.getPosicion()) && tijera.getPelear().getTiempo() != 0) {
                                         System.out.println("Pistola se venga de tijera");
