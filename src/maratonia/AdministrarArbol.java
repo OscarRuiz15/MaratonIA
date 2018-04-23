@@ -48,12 +48,12 @@ public class AdministrarArbol {
         try {
             p = (Arbol) padre.clone();
             ene = enemigos.clone();
-            robotspel = robotspelea.clone();
 
             if (robotsres != null) {
                 restrobots = robotsres.clone();
-            } else {
-                restrobots = null;
+            }
+            if (robotspelea != null) {
+                robotspel = robotspelea.clone();
             }
 
         } catch (CloneNotSupportedException ex) {
@@ -86,14 +86,16 @@ public class AdministrarArbol {
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(AdministrarArbol.class.getName()).log(Level.SEVERE, null, ex);
         }
+        if (robotspel != null) {
 
-        for (int i = 0; i < robotspel.length; i++) {
+            for (int i = 0; i < robotspel.length; i++) {
 
-            robots[robotspel.clone()[i]].getMover().setCasillas(2);
-            moverRobot(robots[robotspel.clone()[i]], nodo.getNodo());
-            //Estas dos lineas son necesarias para que no se contabilice los tiempos calculados anteriormente
-            robots[robotspel.clone()[i]].getPelear().setTiempo(0);
-            robots[robotspel.clone()[i]].getPelear().setEnemigos(null);
+                robots[robotspel.clone()[i]].getMover().setCasillas(2);
+                moverRobot(robots[robotspel.clone()[i]], nodo.getNodo());
+                //Estas dos lineas son necesarias para que no se contabilice los tiempos calculados anteriormente
+                robots[robotspel.clone()[i]].getPelear().setTiempo(0);
+                robots[robotspel.clone()[i]].getPelear().setEnemigos(null);
+            }
         }
         robots[idrobot].getPelear().tiempoPelea(ene.clone());
         robots[idrobot].getPelear().setEnemigos(ene.clone());
@@ -118,17 +120,31 @@ public class AdministrarArbol {
 
                     } else {
                         for (int j = 0; j < robots.length; j++) {
-                            if (((robots[restrobots[i]].getPosicion()) == robots[j].getPosicion()) && robots[j].getPelear().getTiempo() != 0
+                            
+                            if ((restrobots[i]!=j && (robots[restrobots[i]].getPosicion()) == robots[j].getPosicion()) && robots[j].getPelear().getTiempo() != 0
                                     && !robots[restrobots[i]].isOcupado()) {
-                                System.out.println("Papel ayuda a robots[j]");
-                                robots[restrobots[i]].setOcupado(true);
-                                robots[j].getPelear().setTiempo((robots[j].getPelear().getTiempo()) / 2);
-                                robots[j].getPelear().setCosto((robots[j].getPelear().getCosto()) / 2);
-                                robots[j].getPelear().setTiempoenemigo(robots[j].getPelear().getTiempoenemigo() / 2);
+                                if ((restrobots[i] == 0 && j == 2) || (restrobots[i] == 1 && j == 0) || (restrobots[i] == 2 && j == 1)) {
+
+                                    System.out.println("Papel ayuda a robots[j]");
+                                    robots[restrobots[i]].setOcupado(true);
+                                    robots[j].getPelear().setTiempo((robots[j].getPelear().getTiempo()) / 2);
+                                    robots[j].getPelear().setCosto((robots[j].getPelear().getCosto()) / 2);
+                                    robots[j].getPelear().setTiempoenemigo(robots[j].getPelear().getTiempoenemigo() / 2);
+                                    break;
+                                } else {
+                                    System.out.println("Papel ayuda a robots[j]");
+                                    robots[restrobots[i]].setOcupado(true);
+                                    robots[j].getPelear().setTiempo((robots[j].getPelear().getTiempo()) * 2);
+                                    robots[j].getPelear().setCosto((robots[j].getPelear().getCosto()) * 2);
+                                    robots[j].getPelear().setTiempoenemigo(robots[j].getPelear().getTiempoenemigo() * 2);
+                                    break;
+
+                                }
 
                             }
                             if (!robots[restrobots[i]].isOcupado()) {
                                 moverRobot(robots[restrobots[i]], nodo.getNodo());
+                                break;
                             }
 //                            moverRobot(robots[restrobots[i]], nodo.getNodo());
                         }
@@ -158,8 +174,6 @@ public class AdministrarArbol {
         //verNodos(nodo);
         return nodo;
     }
-
- 
 
     public void moverRobot(Robot robot, int tablero[][]) {
 
