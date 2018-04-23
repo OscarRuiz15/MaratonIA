@@ -120,8 +120,8 @@ public class AdministrarArbol {
 
                     } else {
                         for (int j = 0; j < robots.length; j++) {
-                            
-                            if ((restrobots[i]!=j && (robots[restrobots[i]].getPosicion()) == robots[j].getPosicion()) && robots[j].getPelear().getTiempo() != 0
+
+                            if ((restrobots[i] != j && (robots[restrobots[i]].getPosicion()) == robots[j].getPosicion()) && robots[j].getPelear().getTiempo() != 0
                                     && !robots[restrobots[i]].isOcupado()) {
                                 if ((restrobots[i] == 0 && j == 2) || (restrobots[i] == 1 && j == 0) || (restrobots[i] == 2 && j == 1)) {
 
@@ -151,12 +151,55 @@ public class AdministrarArbol {
                     }
 
                 } else if (robots[restrobots[0]].getPosicion() != robots[restrobots[1]].getPosicion()
-                        && robots[restrobots[1]].getPelear().getTiempo() + robots[restrobots[0]].getPelear().getTiempo() != 0) {
+                        //                        && robots[restrobots[1]].getPelear().getTiempo() + robots[restrobots[0]].getPelear().getTiempo() != 0
+                        || (!robots[restrobots[0]].isOcupado() || !robots[restrobots[0]].isOcupado())) {
 
+//                    if (robots[restrobots[i]].getPelear().getTiempo() != 0) {
+//                        peleaRobot(robots[restrobots[i]], nodo.getNodo());
+//                    } else {
+//                        moverRobot(robots[restrobots[i]], nodo.getNodo());
+//                    }
                     if (robots[restrobots[i]].getPelear().getTiempo() != 0) {
                         peleaRobot(robots[restrobots[i]], nodo.getNodo());
+                        for (int j = 0; j < robots.length; j++) {
+                            if (j != restrobots[i]) {
+                                if (((robots[restrobots[i]].getPosicion()) == robots[j].getPosicion()) && robots[restrobots[i]].getPelear().getTiempo() == 0) {
+                                    robots[j].setOcupado(false);
+                                }
+                            }
+
+                        }
+
                     } else {
-                        moverRobot(robots[restrobots[i]], nodo.getNodo());
+                        for (int j = 0; j < robots.length; j++) {
+
+                            if ((restrobots[i] != j && (robots[restrobots[i]].getPosicion()) == robots[j].getPosicion()) && robots[j].getPelear().getTiempo() != 0
+                                    && !robots[restrobots[i]].isOcupado()) {
+                                if ((restrobots[i] == 0 && j == 2) || (restrobots[i] == 1 && j == 0) || (restrobots[i] == 2 && j == 1)) {
+
+                                    System.out.println("Papel ayuda a robots[j]");
+                                    robots[restrobots[i]].setOcupado(true);
+                                    robots[j].getPelear().setTiempo((robots[j].getPelear().getTiempo()) / 2);
+                                    robots[j].getPelear().setCosto((robots[j].getPelear().getCosto()) / 2);
+                                    robots[j].getPelear().setTiempoenemigo(robots[j].getPelear().getTiempoenemigo() / 2);
+                                    break;
+                                } else {
+                                    System.out.println("Papel ayuda a robots[j]");
+                                    robots[restrobots[i]].setOcupado(true);
+                                    robots[j].getPelear().setTiempo((robots[j].getPelear().getTiempo()) * 2);
+                                    robots[j].getPelear().setCosto((robots[j].getPelear().getCosto()) * 2);
+                                    robots[j].getPelear().setTiempoenemigo(robots[j].getPelear().getTiempoenemigo() * 2);
+                                    break;
+
+                                }
+
+                            }
+                            if (!robots[restrobots[i]].isOcupado()) {
+                                moverRobot(robots[restrobots[i]], nodo.getNodo());
+                                break;
+                            }
+//                            moverRobot(robots[restrobots[i]], nodo.getNodo());
+                        }
                     }
 
                 }

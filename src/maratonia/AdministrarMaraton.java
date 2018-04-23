@@ -691,7 +691,9 @@ public class AdministrarMaraton extends UIAplicacion {
                             ///////////////////////////////////////////////////
                             //ESto lo hacen todos los nodos////////////////////
                             if (!decision) {
+                                Robot robots[]={piedra,papel,tijera,pistola};
                                 if (piedra.getPelear().getTiempo() == 0) {
+                                    
                                     if (((piedra.getPosicion()) == papel.getPosicion()) && papel.getPelear().getTiempo() != 0
                                             && !piedra.isOcupado()) {
                                         System.out.println("Piedra se venga de papel");
@@ -873,6 +875,44 @@ public class AdministrarMaraton extends UIAplicacion {
     //Cambios en el tablero como vector, pasar tablero de cada nodo como parametro
     ///////////////////////////////////////////////////77
 
+    public void generarMovimiento(Robot robots[],int id){
+        
+    }
+    
+    public void generarPelea(Robot robots[],int id,int venga,int ayuda,int neutro){
+        for (int i = 0; i < robots.length; i++) {
+            if (i!=id) {
+                if (((robots[id].getPosicion()) == robots[venga].getPosicion()) && robots[venga].getPelear().getTiempo() != 0
+                                            && !robots[id].isOcupado()) {
+                                        System.out.println("Piedra se venga de robots[venga]");
+                                        robots[id].setOcupado(true);
+                                        robots[venga].getPelear().setTiempo((robots[venga].getPelear().getTiempo()) * 2);
+                                        robots[venga].getPelear().setCosto(robots[venga].getPelear().getCosto() * 2);
+                                        robots[venga].getPelear().setTiempoenemigo(robots[venga].getPelear().getTiempoenemigo() * 2);
+                                    }
+                                    if (((robots[id].getPosicion()) == robots[ayuda].getPosicion()) && robots[ayuda].getPelear().getTiempo() != 0
+                                            && !robots[id].isOcupado()) {
+                                        System.out.println("Piedra ayuda a robots[ayuda]");
+                                        robots[id].setOcupado(true);
+                                        robots[ayuda].getPelear().setTiempo((robots[ayuda].getPelear().getTiempo()) / 2);
+                                        robots[ayuda].getPelear().setCosto(robots[ayuda].getPelear().getCosto() / 2);
+                                        robots[ayuda].getPelear().setTiempoenemigo(robots[ayuda].getPelear().getTiempoenemigo() / 2);
+                                    }
+                                    if (((robots[id].getPosicion()) == pistola.getPosicion()) && pistola.getPelear().getTiempo() != 0
+                                            && !robots[id].isOcupado()) {
+                                        System.out.println("Tijera ayuda a robots[i]");
+                                        robots[id].setOcupado(true);
+                                        
+                                    }
+                                    if (!robots[id].isOcupado()) {
+
+                                        moverRobot(robots[id]);
+                                    }
+            }
+            
+        }
+    }
+    
     public void moverRobot(Robot robot) {
         int mov = robot.getMover().moverA(robot.getPosicion());
 
